@@ -37,7 +37,7 @@ public class DetailActivity extends AppCompatActivity {
         TextView howToApply = findViewById(R.id.how_to_apply);
         TextView url = findViewById(R.id.url);
         final TextView companyUrl = findViewById(R.id.company_url);
-
+//for nt
 
         final Job job = (Job) getIntent().getExtras().getSerializable("job");
         Picasso.with(companyLogo.getContext()).load(job.getCompanyLogo()).into(companyLogo);
