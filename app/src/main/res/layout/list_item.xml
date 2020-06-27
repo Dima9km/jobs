@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Vacancy title"
-                    android:textSize="15dp"
+                    android:textSize="18dp"
                     android:textStyle="bold" />
 
 
@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Here is location"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textStyle="italic" />
             </LinearLayout>
 

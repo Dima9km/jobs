@@ -1,12 +1,9 @@
 package com.dima.jobs;
 
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,7 +17,6 @@ import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -35,7 +31,7 @@ public class DetailActivity extends AppCompatActivity {
         //getting elements from xml
         Toolbar toolbarDetail = findViewById(R.id.toolbar_detail);
         ImageView companyLogo = findViewById(R.id.companyLogo);
-        TextView company = findViewById(R.id.company);
+        //    TextView company = findViewById(R.id.company);
         TextView title = findViewById(R.id.title);
         TextView location = findViewById(R.id.location);
         TextView type = findViewById(R.id.type);
@@ -50,7 +46,7 @@ public class DetailActivity extends AppCompatActivity {
 
         //setting properties to views
         Picasso.with(companyLogo.getContext()).load(job.getCompanyLogo()).into(companyLogo);
-        company.setText(job.getCompany());
+        //     company.setText(job.getCompany());
         title.setText(job.getTitle());
         location.setText(job.getLocation());
         type.setText(job.getType());
@@ -69,15 +65,23 @@ public class DetailActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        createdAt.setText(str);
+        createdAt.setText("Created at: " + str);
 
-        toolbarDetail.setTitle(job.getTitle());
+        toolbarDetail.setSubtitle(job.getTitle());
+        toolbarDetail.setTitle(job.getCompany());
         toolbarDetail.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
+        toolbarDetail.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ListActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         howToApply.setText(Html.fromHtml(job.getHowToApply()));
-        url.setText(Html.fromHtml(job.getUrl()));
-        companyUrl.setText(job.getCompanyUrl());
+        url.setText("See more: " + Html.fromHtml(job.getUrl()));
+        companyUrl.setText("Website: " + job.getCompanyUrl());
         companyUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
