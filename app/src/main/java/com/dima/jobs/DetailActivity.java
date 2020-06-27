@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Html;
@@ -11,7 +12,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.squareup.picasso.Picasso;
 
@@ -23,10 +26,14 @@ import java.util.Locale;
 
 public class DetailActivity extends AppCompatActivity {
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        //getting elements from xml
+        Toolbar toolbarDetail = findViewById(R.id.toolbar_detail);
         ImageView companyLogo = findViewById(R.id.companyLogo);
         TextView company = findViewById(R.id.company);
         TextView title = findViewById(R.id.title);
@@ -37,9 +44,11 @@ public class DetailActivity extends AppCompatActivity {
         TextView howToApply = findViewById(R.id.how_to_apply);
         TextView url = findViewById(R.id.url);
         final TextView companyUrl = findViewById(R.id.company_url);
-//for nt
 
+        //gettin the element of job from parcel
         final Job job = (Job) getIntent().getExtras().getSerializable("job");
+
+        //setting properties to views
         Picasso.with(companyLogo.getContext()).load(job.getCompanyLogo()).into(companyLogo);
         company.setText(job.getCompany());
         title.setText(job.getTitle());
@@ -47,22 +56,23 @@ public class DetailActivity extends AppCompatActivity {
         type.setText(job.getType());
         description.setText(Html.fromHtml(job.getDescription()));
 
+        // converting date output of createdAt
         String inputPattern = "EEE MMM dd HH:mm:ss z yyyy"; //Wed Jun 03 19:36:58 UTC 2020
         String outputPattern = "dd.MMM.yyyy";
         SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.getDefault());
         SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.getDefault());
-
         Date date = null;
         String str = null;
-
         try {
             date = inputFormat.parse(job.getCreatedAt());
             str = outputFormat.format(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         createdAt.setText(str);
+
+        toolbarDetail.setTitle(job.getTitle());
+        toolbarDetail.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
 
 
         howToApply.setText(Html.fromHtml(job.getHowToApply()));
@@ -74,7 +84,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(job.getCompanyUrl()));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setPackage(null);
-                companyUrl.getContext().startActivity(intent);
+                startActivity(intent);
             }
         });
 
@@ -84,7 +94,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(job.getCompanyUrl()));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setPackage(null);
-                companyUrl.getContext().startActivity(intent);
+                startActivity(intent);
             }
         });
 
@@ -94,7 +104,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(job.getCompanyUrl()));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setPackage(null);
-                companyUrl.getContext().startActivity(intent);
+                startActivity(intent);
             }
         });
 
