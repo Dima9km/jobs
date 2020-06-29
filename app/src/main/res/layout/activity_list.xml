@@ -14,7 +14,16 @@
         android:background="@color/colorPrimaryDark"
         android:elevation="4dp"
         app:title="Vacancies list"
-        app:titleTextColor="#FFFFFF" />
+        app:titleTextColor="#FFFFFF">
+
+        <ImageButton
+            android:id="@+id/profile_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:background="@drawable/ic_baseline_account_circle_24"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"

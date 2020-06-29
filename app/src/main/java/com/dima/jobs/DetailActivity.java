@@ -29,6 +29,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         //getting elements from xml
+
         Toolbar toolbarDetail = findViewById(R.id.toolbar_detail);
         ImageView companyLogo = findViewById(R.id.companyLogo);
         //    TextView company = findViewById(R.id.company);
