@@ -54,7 +54,7 @@ public class DetailActivity extends AppCompatActivity {
 
         // converting date output of createdAt
         String inputPattern = "EEE MMM dd HH:mm:ss z yyyy"; //Wed Jun 03 19:36:58 UTC 2020
-        String outputPattern = "dd.MMM.yyyy";
+        String outputPattern = "dd.MM.yyyy";
         SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.getDefault());
         SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.getDefault());
         Date date = null;

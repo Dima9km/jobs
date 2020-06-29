@@ -46,24 +46,16 @@
                     android:layout_marginLeft="5dp"
                     android:orientation="vertical">
 
-                    <!--                    <TextView-->
-                    <!--                        android:id="@+id/company"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginTop="2dp"-->
-                    <!--                        android:text="Here will be the name of company"-->
-                    <!--                        android:textSize="15sp" />-->
-
                     <TextView
                         android:id="@+id/company_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:autoLink="web"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:padding="10dp"
                         android:text="company url"
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="italic" />
-
 
                 </LinearLayout>
             </LinearLayout>
@@ -73,7 +65,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="10dp">
-
 
                 <TextView
                     android:id="@+id/title"
@@ -115,6 +106,7 @@
                     android:id="@+id/how_to_apply"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:text="How to apply" />
 
                 <TextView
@@ -122,6 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:autoLink="web"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:text="Url" />
 
 
