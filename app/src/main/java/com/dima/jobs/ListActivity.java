@@ -30,14 +30,7 @@ public class ListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ProfileActivity.class);
                 startActivity(intent);
-
             }
         }));
-
-
     }
-
-
-
-
 }

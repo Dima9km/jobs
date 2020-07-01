@@ -69,8 +69,4 @@ public class Job implements Serializable {
     public String getCompanyLogo() {
         return companyLogo;
     }
-
-
-
-
 }
