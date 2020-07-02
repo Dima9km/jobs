@@ -1,16 +1,12 @@
 package com.dima.jobs;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
-import java.io.Serializable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -22,9 +18,8 @@ public class ListActivity extends AppCompatActivity {
         initRecyclerView();
     }
 
-    private void initUI(){
-        ImageButton profileButton = (ImageButton) findViewById(R.id.profile_button);
-        profileButton.setOnClickListener((new View.OnClickListener() {
+    private void initUI() {
+        findViewById(R.id.profile_button).setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ProfileActivity.class);
@@ -33,7 +28,7 @@ public class ListActivity extends AppCompatActivity {
         }));
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ListAdapter adapter = new ListAdapter();

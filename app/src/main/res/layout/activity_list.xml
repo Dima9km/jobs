@@ -19,8 +19,8 @@
             android:id="@+id/profile_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_gravity="end"
             android:layout_margin="10dp"
-            android:layout_gravity="right"
             android:background="@drawable/ic_baseline_account_circle_24"
             android:foreground="?android:attr/selectableItemBackground" />
 
@@ -29,7 +29,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     </androidx.recyclerview.widget.RecyclerView>
 

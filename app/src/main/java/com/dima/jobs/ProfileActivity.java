@@ -17,7 +17,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class ProfileActivity extends AppCompatActivity {
-    final Calendar pickedDate = Calendar.getInstance();
+
     Toolbar toolbarProfile;
     TextView birthday;
     EditText firstName;
@@ -25,6 +25,17 @@ public class ProfileActivity extends AppCompatActivity {
     EditText lastName;
     Spinner sex;
     Button datePicker;
+
+    final Calendar pickedDate = Calendar.getInstance();
+    DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            pickedDate.set(Calendar.YEAR, year);
+            pickedDate.set(Calendar.MONTH, monthOfYear);
+            pickedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            birthday.setText(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(pickedDate.getTime()));
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +52,13 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         firstName = findViewById(R.id.first_name);
         patronymic = findViewById(R.id.patronymic);
         lastName = findViewById(R.id.last_name);
         sex = findViewById(R.id.sex);
         birthday = findViewById(R.id.birthday_text);
+
         datePicker = findViewById(R.id.datepicker);
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,16 +69,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void showDatePicker() {
-        DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                pickedDate.set(Calendar.YEAR, year);
-                pickedDate.set(Calendar.MONTH, monthOfYear);
-                pickedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                birthday.setText(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(pickedDate.getTime()));
-            }
-        };
-
         new DatePickerDialog(ProfileActivity.this, onDateSetListener,
                 pickedDate.get(Calendar.YEAR),
                 pickedDate.get(Calendar.MONTH),

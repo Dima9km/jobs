@@ -18,15 +18,13 @@ public class SplashActivity extends AppCompatActivity {
 
     private void timeToShow(){
         //changing view after 3 sec
-        Timer timer = new Timer();
-        TimerTask tt = new TimerTask() {
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 Intent intent = new Intent(SplashActivity.this, ListActivity.class);
                 startActivity(intent);
                 finish();
             }
-        };
-        timer.schedule(tt, 3000);
+        }, 3000);
     }
 }
