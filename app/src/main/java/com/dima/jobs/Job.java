@@ -1,8 +1,6 @@
 package com.dima.jobs;
 
 import java.io.Serializable;
-import java.net.URL;
-import java.util.ArrayList;
 
 public class Job implements Serializable {
     private String type;

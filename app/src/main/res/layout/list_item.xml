@@ -16,7 +16,6 @@
         app:cardUseCompatPadding="true"
         app:contentPadding="10dp">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -54,7 +53,6 @@
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
-
                 <TextView
                     android:id="@+id/type"
                     android:layout_width="wrap_content"
@@ -68,6 +66,7 @@
                     android:text="Here is location"
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="italic" />
+
             </LinearLayout>
 
         </LinearLayout>

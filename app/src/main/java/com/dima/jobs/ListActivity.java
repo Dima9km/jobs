@@ -14,17 +14,16 @@ import java.io.Serializable;
 
 public class ListActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private ImageButton  profileButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        recyclerView = findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ListAdapter adapter = new ListAdapter();
-        recyclerView.setAdapter(adapter);
-        profileButton = (ImageButton) findViewById(R.id.profile_button);
+        initUI();
+        initRecyclerView();
+    }
+
+    private void initUI(){
+        ImageButton profileButton = (ImageButton) findViewById(R.id.profile_button);
         profileButton.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,5 +31,12 @@ public class ListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }));
+    }
+
+    private void initRecyclerView(){
+        RecyclerView recyclerView = findViewById(R.id.recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ListAdapter adapter = new ListAdapter();
+        recyclerView.setAdapter(adapter);
     }
 }

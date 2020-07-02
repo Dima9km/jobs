@@ -2,11 +2,9 @@ package com.dima.jobs;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,16 +27,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(layoutIdOfListItem, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
-
         return viewHolder;
-
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(jobs.get(position));
-
-
     }
 
     @Override
@@ -46,10 +40,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return jobs.size();
     }
 
-
-
-    class ViewHolder extends RecyclerView.ViewHolder  {
-
+    class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView companyLogo;
         private TextView company;
         private TextView title;
@@ -77,7 +68,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     Intent intent = new Intent(v.getContext(), DetailActivity.class);
                     intent.putExtra("job", (Serializable) job);
                     v.getContext().startActivity(intent);
-
                 }
             });
         }
