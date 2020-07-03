@@ -18,46 +18,88 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="8dp">
 
-        <EditText
-            android:id="@+id/first_name"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="First name" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/patronymic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Patronymic name" />
+            <EditText
+                android:id="@+id/first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First name"
+                android:padding="8dp" />
 
-        <EditText
-            android:id="@+id/last_name"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Last name" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/patronymic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Patronymic name"
+                android:padding="8dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last name"
+                android:padding="8dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
             android:id="@+id/sex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/sex" />
+            android:entries="@array/sex"
+            android:padding="8dp" />
 
         <TextView
             android:id="@+id/birthday_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="2dp"
-            android:text=" Birthdate" />
+            android:padding="8dp"
+            android:text=" Birthdate"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/datepicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Birthday" />
+            android:layout_gravity="start"
+            android:padding="8dp"
+            android:text="Select Birthday"
+            android:textAlignment="viewStart" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/save_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorPrimaryDark"
+                android:padding="8dp"
+                android:text="Save"
+                android:textColor="@android:color/white" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
