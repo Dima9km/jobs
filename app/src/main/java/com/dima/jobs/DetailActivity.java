@@ -20,15 +20,23 @@ import java.util.Locale;
 
 public class DetailActivity extends AppCompatActivity {
 
-    Job job;
+    private Job job;
+
+    private ImageView companyLogo;
+    private TextView title;
+    private TextView location;
+    private TextView type;
+    private TextView description;
+    private TextView createdAt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        job = (Job) getIntent().getExtras().getSerializable("job");    //Getting job data from parcel
+        job = (Job) getIntent().getExtras().getSerializable("job");
         setContentView(R.layout.activity_detail);
         initToolbar();
         initUI();
+        fillUpUI();
     }
 
     private void initToolbar() {
@@ -44,17 +52,20 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        ImageView companyLogo = findViewById(R.id.companyLogo);
+        companyLogo = findViewById(R.id.companyLogo);
+        title = findViewById(R.id.title);
+        location = findViewById(R.id.location);
+        type = findViewById(R.id.type);
+        description = findViewById(R.id.description);
+        createdAt = findViewById(R.id.created_at);
+    }
+
+    private void fillUpUI() {
         Picasso.with(companyLogo.getContext()).load(job.getCompanyLogo()).into(companyLogo);
-        TextView title = findViewById(R.id.title);
         title.setText(job.getTitle());
-        TextView location = findViewById(R.id.location);
         location.setText(job.getLocation());
-        TextView type = findViewById(R.id.type);
         type.setText(job.getType());
-        TextView description = findViewById(R.id.description);
         description.setText(Html.fromHtml(job.getDescription()));
-        TextView createdAt = findViewById(R.id.created_at);
         //converting date for createdAt
         SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.getDefault());
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
@@ -94,9 +105,6 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void onClickHelper() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(job.getCompanyUrl()));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setPackage(null);
-        startActivity(intent);
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(job.getCompanyUrl())));
     }
 }

@@ -3,6 +3,7 @@ package com.dima.jobs;
 import java.io.Serializable;
 
 public class Job implements Serializable {
+
     private String type;
     private String url;
     private String createdAt;

@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+
     ArrayList<Job> jobs = new JobsDataCreator().getVacanciesList();
 
     @Override
@@ -50,16 +51,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         void bind(final Job job) {
             Picasso.with(companyLogo.getContext()).load(job.getCompanyLogo()).into(companyLogo);
+
             company.setText(job.getCompany());
             title.setText(job.getTitle());
             location.setText(job.getLocation());
             type.setText(job.getType());
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), DetailActivity.class);
-                    intent.putExtra("job", job);
-                    v.getContext().startActivity(intent);
+                    v.getContext().startActivity(new Intent(v.getContext(), DetailActivity.class).putExtra("job", job));
                 }
             });
         }

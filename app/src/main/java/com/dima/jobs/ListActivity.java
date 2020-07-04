@@ -15,7 +15,7 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         initUI();
-        initRecyclerView();
+        showJobsList();
     }
 
     private void initUI() {
@@ -28,10 +28,9 @@ public class ListActivity extends AppCompatActivity {
         }));
     }
 
-    private void initRecyclerView() {
+    private void showJobsList() {
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ListAdapter adapter = new ListAdapter();
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(new ListAdapter());
     }
 }

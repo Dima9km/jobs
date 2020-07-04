@@ -28,14 +28,13 @@ public class ProfileActivity extends AppCompatActivity {
     EditText lastName;
     Spinner sex;
     Button datePicker;
-    Button saveButton;
+    Button btnSave;
+
     String FIRST_NAME = "first name";
     String PATRONYMIC = "patronymic";
     String LAST_NAME = "last name";
     String SEX = "sex";
     String BIRTHDAY = "birthday";
-
-    SharedPreferences prefs;
 
     final Calendar pickedDate = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -79,17 +78,17 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        saveButton = findViewById(R.id.save_data);
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        btnSave = findViewById(R.id.save_data);
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveData();
-                showToast("All data changed");
+                showToast();
             }
         });
     }
 
-    public void showDatePicker() {
+    private void showDatePicker() {
         new DatePickerDialog(ProfileActivity.this, onDateSetListener,
                 pickedDate.get(Calendar.YEAR),
                 pickedDate.get(Calendar.MONTH),
@@ -97,21 +96,19 @@ public class ProfileActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void saveData() {
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-        SharedPreferences.Editor e = prefs.edit();
-        e.putString(FIRST_NAME, firstName.getText().toString());
-        e.putString(PATRONYMIC, patronymic.getText().toString());
-        e.putString(LAST_NAME, lastName.getText().toString());
-        e.putInt(SEX, sex.getSelectedItemPosition());
-        e.putString(BIRTHDAY, birthday.getText().toString());
-        e.apply();
+    private void saveData() {
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .edit()
+                .putString(FIRST_NAME, firstName.getText().toString())
+                .putString(PATRONYMIC, patronymic.getText().toString())
+                .putString(LAST_NAME, lastName.getText().toString())
+                .putInt(SEX, sex.getSelectedItemPosition())
+                .putString(BIRTHDAY, birthday.getText().toString())
+                .apply();
     }
 
-    public void readData() {
-        if (prefs == null) {
-            prefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-        }
+    private void readData() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         firstName.setText(prefs.getString(FIRST_NAME, "-"));
         patronymic.setText(prefs.getString(PATRONYMIC.toString(), "-"));
         lastName.setText(prefs.getString(LAST_NAME.toString(), "-"));
@@ -119,8 +116,7 @@ public class ProfileActivity extends AppCompatActivity {
         birthday.setText(prefs.getString(BIRTHDAY.toString(), "-"));
     }
 
-    public void showToast(String message) {
-        Toast toast = new Toast(ProfileActivity.this);
-        toast.makeText(ProfileActivity.this, message, Toast.LENGTH_LONG).show();
+    private void showToast() {
+        Toast.makeText(ProfileActivity.this, "All data changed", Toast.LENGTH_LONG).show();
     }
 }
