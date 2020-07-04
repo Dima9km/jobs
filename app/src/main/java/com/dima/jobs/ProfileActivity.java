@@ -110,10 +110,10 @@ public class ProfileActivity extends AppCompatActivity {
     private void readData() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         firstName.setText(prefs.getString(FIRST_NAME, "-"));
-        patronymic.setText(prefs.getString(PATRONYMIC.toString(), "-"));
-        lastName.setText(prefs.getString(LAST_NAME.toString(), "-"));
+        patronymic.setText(prefs.getString(PATRONYMIC, "-"));
+        lastName.setText(prefs.getString(LAST_NAME, "-"));
         sex.setSelection(prefs.getInt(SEX, 1));
-        birthday.setText(prefs.getString(BIRTHDAY.toString(), "-"));
+        birthday.setText(prefs.getString(BIRTHDAY, "-"));
     }
 
     private void showToast() {
