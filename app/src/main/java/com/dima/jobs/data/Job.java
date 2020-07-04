@@ -1,9 +1,8 @@
-package com.dima.jobs;
+package com.dima.jobs.data;
 
 import java.io.Serializable;
 
 public class Job implements Serializable {
-
     private String type;
     private String url;
     private String createdAt;

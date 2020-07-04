@@ -1,4 +1,4 @@
-package com.dima.jobs;
+package com.dima.jobs.ui.screens.profile;
 
 import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.dima.jobs.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -56,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        toolbarProfile = findViewById(R.id.toolbar_profile);
+        toolbarProfile = findViewById(R.id.tbProfilePage);
         toolbarProfile.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,13 +66,13 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        firstName = findViewById(R.id.first_name);
-        patronymic = findViewById(R.id.patronymic);
-        lastName = findViewById(R.id.last_name);
-        sex = findViewById(R.id.sex);
-        birthday = findViewById(R.id.birthday_text);
+        firstName = findViewById(R.id.etFirstName);
+        patronymic = findViewById(R.id.etPatronymic);
+        lastName = findViewById(R.id.etLastName);
+        sex = findViewById(R.id.spSex);
+        birthday = findViewById(R.id.tvBirthdayText);
 
-        datePicker = findViewById(R.id.datepicker);
+        datePicker = findViewById(R.id.btnDatePicker);
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +80,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        btnSave = findViewById(R.id.save_data);
+        btnSave = findViewById(R.id.btnSaveData);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

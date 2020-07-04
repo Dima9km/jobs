@@ -1,4 +1,6 @@
-package com.dima.jobs;
+package com.dima.jobs.utils;
+
+import com.dima.jobs.data.Job;
 
 import java.util.ArrayList;
 

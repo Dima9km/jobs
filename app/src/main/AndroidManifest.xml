@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".SplashActivity" >
+        <activity android:name=".ui.screens.splash.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,9 +22,9 @@
 
 
         </activity>
-        <activity android:name=".ListActivity" />
-        <activity android:name=".DetailActivity"/>
-        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".ui.screens.jobs.JobsActivity" />
+        <activity android:name=".ui.screens.job.JobActivity"/>
+        <activity android:name=".ui.screens.profile.ProfileActivity"/>
 
     </application>
 

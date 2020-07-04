@@ -5,32 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ListActivity">
+    tools:context=".ui.screens.jobs.JobsActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/tbJobs"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/colorPrimaryDark"
-        app:title="Vacancies list"
-        app:titleTextColor="#FFFFFF">
-
-        <ImageButton
-            android:id="@+id/profile_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="end"
-            android:layout_margin="10dp"
-            android:background="@drawable/ic_baseline_account_circle_24"
-            android:foreground="?android:attr/selectableItemBackground" />
-
-    </androidx.appcompat.widget.Toolbar>
+        app:menu="@menu/toolbar_menu"
+        app:title="Jobs list"
+        app:titleTextColor="#FFFFFF" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
+        android:id="@+id/rclJobs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
     </androidx.recyclerview.widget.RecyclerView>
 

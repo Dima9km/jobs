@@ -1,4 +1,4 @@
-package com.dima.jobs;
+package com.dima.jobs.ui.screens.jobs.adapter;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,17 +10,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dima.jobs.data.Job;
+import com.dima.jobs.ui.screens.job.JobActivity;
+import com.dima.jobs.R;
+import com.dima.jobs.utils.JobsDataCreator;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
 
     ArrayList<Job> jobs = new JobsDataCreator().getVacanciesList();
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_job, parent, false));
     }
 
     @Override
@@ -42,11 +46,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            companyLogo = itemView.findViewById(R.id.companyLogo);
+            companyLogo = itemView.findViewById(R.id.ivCompanyLogo);
             company = itemView.findViewById(R.id.company);
-            title = itemView.findViewById(R.id.title);
-            location = itemView.findViewById(R.id.location);
-            type = itemView.findViewById(R.id.type);
+            title = itemView.findViewById(R.id.tvVacancyTitle);
+            location = itemView.findViewById(R.id.tvLocation);
+            type = itemView.findViewById(R.id.tvTtype);
         }
 
         void bind(final Job job) {
@@ -60,7 +64,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    v.getContext().startActivity(new Intent(v.getContext(), DetailActivity.class).putExtra("job", job));
+                    v.getContext().startActivity(new Intent(v.getContext(), JobActivity.class).putExtra("job", job));
                 }
             });
         }
