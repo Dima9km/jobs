@@ -33,9 +33,7 @@ public class JobsDataCreator {
                 "Wed Jun 03 19:36:58 UTC 2020",
                 "Kasisto",
                 "http://www.kasisto.com/", "New York", "Front-End Software Engineer",
-                "<p>Humanizing Digital Experiences®</p>\n<p>Kasisto’s Digital Experience Platform, KAI, " +
-                        "is designed for financial institutions to deliver the industry’s most amazing Conversational " +
-                        "AI powered intelligent virtual assistants to their customers. KAI is open and extensible, and also " +
+                "<p>Humanizing Digital Experiences®</p>\n<p>Kasisto’s Digital Experience Platform, KAI, is designed for financial institutions to deliver the industry’s most amazing Conversational AI powered intelligent virtual assistants to their customers. KAI is open and extensible, and also " +
                         "fluent in the language of banking and finance. From simple retail transactions to the complex " +
                         "demands of corporate banks and wealth management, financial institutions can deliver meaningful " +
                         "digital interactions with KAI that help build their digital brand.</p>\n<p>Financial institutions " +

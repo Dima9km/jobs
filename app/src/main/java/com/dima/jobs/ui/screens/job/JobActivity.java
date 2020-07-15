@@ -63,7 +63,7 @@ public class JobActivity extends AppCompatActivity {
     }
 
     private void fillUpUI() {
-        Picasso.with(companyLogo.getContext()).load(job.getCompanyLogo()).into(companyLogo);
+        Picasso.with(companyLogo.getContext()).load(job.getCompanyLogo()).placeholder(R.drawable.ic_baseline_hourglass_empty_24).error(R.drawable.ic_baseline_error_outline_24).into(companyLogo);
         title.setText(job.getTitle());
         location.setText(job.getLocation());
         type.setText(job.getType());

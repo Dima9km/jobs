@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dima.jobs.R;
 import com.dima.jobs.data.Job;
 import com.dima.jobs.ui.screens.job.JobActivity;
-import com.dima.jobs.R;
 import com.dima.jobs.utils.JobsDataCreator;
 import com.squareup.picasso.Picasso;
 
@@ -54,7 +54,8 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
         }
 
         void bind(final Job job) {
-            Picasso.with(companyLogo.getContext()).load(job.getCompanyLogo()).into(companyLogo);
+
+            Picasso.with(companyLogo.getContext()).load(job.getCompanyLogo()).placeholder(R.drawable.ic_baseline_hourglass_empty_24).error(R.drawable.ic_baseline_error_outline_24).into(companyLogo);
 
             company.setText(job.getCompany());
             title.setText(job.getTitle());
