@@ -1,4 +1,4 @@
-package com.dima.jobs.ui.screens.jobs;
+package com.dima.jobs.ui.screens.favorites;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dima.jobs.R;
 import com.dima.jobs.utils.RecyclerViewAdapter;
 
-public class JobsFragment extends Fragment {
+public class FavoritesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_jobs, container, false);
+        return inflater.inflate(R.layout.fragment_favorites, container, false);
     }
 
     @Override

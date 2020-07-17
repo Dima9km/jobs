@@ -1,4 +1,4 @@
-package com.dima.jobs.ui.screens.jobs.adapter;
+package com.dima.jobs.utils;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,12 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dima.jobs.R;
 import com.dima.jobs.data.Job;
 import com.dima.jobs.ui.screens.job.JobActivity;
-import com.dima.jobs.utils.JobsDataCreator;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     ArrayList<Job> jobs = new JobsDataCreator().getVacanciesList();
 
@@ -43,6 +42,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
         private TextView title;
         private TextView location;
         private TextView type;
+        private ImageView favoriteStar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,11 +51,12 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
             title = itemView.findViewById(R.id.tvVacancyTitle);
             location = itemView.findViewById(R.id.tvLocation);
             type = itemView.findViewById(R.id.tvTtype);
+            favoriteStar = itemView.findViewById(R.id.ivFavorite);
         }
 
         void bind(final Job job) {
-
             Picasso.with(companyLogo.getContext()).load(job.getCompanyLogo()).placeholder(R.drawable.ic_baseline_hourglass_empty_24).error(R.drawable.ic_baseline_error_outline_24).into(companyLogo);
+            setUpFavoriteStar(job);
 
             company.setText(job.getCompany());
             title.setText(job.getTitle());
@@ -68,6 +69,14 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
                     v.getContext().startActivity(new Intent(v.getContext(), JobActivity.class).putExtra("job", job));
                 }
             });
+        }
+
+        void setUpFavoriteStar(Job job) {
+            if (job.isFavorite()) {
+                favoriteStar.setImageResource(R.drawable.ic_baseline_star_24);
+            } else {
+                favoriteStar.setImageResource(R.drawable.ic_baseline_star_border_24);
+            }
         }
     }
 }

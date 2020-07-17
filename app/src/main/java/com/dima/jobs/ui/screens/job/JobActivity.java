@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.dima.jobs.data.Job;
 import com.dima.jobs.R;
+import com.dima.jobs.data.App;
+import com.dima.jobs.data.Job;
+import com.dima.jobs.data.JobFavoritesDao;
+import com.dima.jobs.data.JobFavoritesDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -42,13 +47,38 @@ public class JobActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        Toolbar toolbarDetail = findViewById(R.id.tbJob);
-        toolbarDetail.setSubtitle(job.getTitle());
-        toolbarDetail.setTitle(job.getCompany());
-        toolbarDetail.setNavigationOnClickListener(new View.OnClickListener() {
+        final Toolbar toolbar = findViewById(R.id.tbJob);
+        toolbar.setSubtitle(job.getTitle());
+        toolbar.setTitle(job.getCompany());
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        toolbar.inflateMenu(R.menu.detail_toolbar_menu);
+        if (job.isFavorite()) {
+            toolbar.getMenu().getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_24));
+        } else {
+            toolbar.getMenu().getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_border_24));
+        }
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                JobFavoritesDatabase jobFavoritesDatabase = App.getInstance().getDatabase();
+                JobFavoritesDao jobFavoritesDao = jobFavoritesDatabase.jobFavoritesDao();
+                if (!job.isFavorite()) {
+                    jobFavoritesDao.addFavorite(job);
+                    toolbar.getMenu().getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_24));
+                    job.setFavorite(true);
+                    showToast("Added to favorites");
+                } else {
+                    jobFavoritesDao.deleteFavorite(job);
+                    toolbar.getMenu().getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_border_24));
+                    job.setFavorite(false);
+                    showToast("Removed from favorites");
+                }
+                return true;
             }
         });
     }
@@ -108,5 +138,9 @@ public class JobActivity extends AppCompatActivity {
 
     private void onClickHelper() {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(job.getCompanyUrl())));
+    }
+
+    private void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 }

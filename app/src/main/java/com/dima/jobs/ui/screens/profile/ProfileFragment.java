@@ -59,18 +59,25 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initUI(view);
+        initUI();
         readData();
     }
 
-    private void initUI(View view) {
-        firstName = view.findViewById(R.id.etFirstName);
-        patronymic = view.findViewById(R.id.etPatronymic);
-        lastName = view.findViewById(R.id.etLastName);
-        sex = view.findViewById(R.id.spSex);
-        birthday = view.findViewById(R.id.tvBirthdayText);
+    @Override
+    public void onResume() {
+        super.onResume();
+        initUI();
+        readData();
+    }
 
-        datePicker = view.findViewById(R.id.btnDatePicker);
+    private void initUI() {
+        firstName = getView().findViewById(R.id.etFirstName);
+        patronymic = getView().findViewById(R.id.etPatronymic);
+        lastName = getView().findViewById(R.id.etLastName);
+        sex = getView().findViewById(R.id.spSex);
+        birthday = getView().findViewById(R.id.tvBirthdayText);
+
+        datePicker = getView().findViewById(R.id.btnDatePicker);
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +85,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        btnSave = view.findViewById(R.id.btnSaveData);
+        btnSave = getView().findViewById(R.id.btnSaveData);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
