@@ -17,13 +17,12 @@ import com.dima.jobs.R;
 import com.dima.jobs.data.App;
 import com.dima.jobs.data.Job;
 import com.dima.jobs.data.JobFavoritesDao;
-import com.dima.jobs.data.JobFavoritesDatabase;
+import com.dima.jobs.data.JobsDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class JobActivity extends AppCompatActivity {
@@ -37,8 +36,8 @@ public class JobActivity extends AppCompatActivity {
     private TextView description;
     private TextView createdAt;
 
-    JobFavoritesDatabase jobFavoritesDatabase = App.getInstance().getDatabase();
-    JobFavoritesDao jobFavoritesDao = jobFavoritesDatabase.jobFavoritesDao();
+    JobsDatabase db = App.getInstance().getDatabase();
+    JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,31 +60,33 @@ public class JobActivity extends AppCompatActivity {
             }
         });
         toolbar.inflateMenu(R.menu.detail_toolbar_menu);
-        if (job.isFavorite()) {
-            toolbar.getMenu().getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_24));
-        } else {
-            toolbar.getMenu().getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_border_24));
-        }
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
                 if (!job.isFavorite()) {
                     job.setFavorite(true);
                     jobFavoritesDao.addFavorite(job);
-                    toolbar.getMenu().getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_24));
+                    toolbar.getMenu().getItem(0)
+                            .setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_24));
                     showToast("Added to favorites");
                 } else {
                     job.setFavorite(false);
                     jobFavoritesDao.deleteFavorite(job);
-                    toolbar.getMenu().getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_border_24));
+                    toolbar.getMenu().getItem(0)
+                            .setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_border_24));
                     showToast("Removed from favorites");
-                    List<Job> temp = jobFavoritesDao.getAll();
-                    temp.get(0);
                 }
                 return true;
             }
         });
+
+        if (job.isFavorite()) {
+            toolbar.getMenu().getItem(0)
+                    .setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_24));
+        } else {
+            toolbar.getMenu().getItem(0)
+                    .setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_border_24));
+        }
     }
 
     private void initUI() {
@@ -98,7 +99,12 @@ public class JobActivity extends AppCompatActivity {
     }
 
     private void fillUpUI() {
-        Picasso.with(companyLogo.getContext()).load(job.getCompanyLogo()).placeholder(R.drawable.ic_baseline_hourglass_empty_24).error(R.drawable.ic_baseline_error_outline_24).into(companyLogo);
+        Picasso.with(companyLogo.getContext())
+                .load(job.getCompanyLogo())
+                .placeholder(R.drawable.ic_baseline_hourglass_empty_24)
+                .error(R.drawable.ic_baseline_error_outline_24)
+                .into(companyLogo);
+
         title.setText(job.getTitle());
         location.setText(job.getLocation());
         type.setText(job.getType());
@@ -113,6 +119,7 @@ public class JobActivity extends AppCompatActivity {
             resultString = outputFormat.format(receivedDate);
         } catch (ParseException e) {
             e.printStackTrace();
+            resultString = "Long time ago";
         }
         createdAt.setText("Created at: " + resultString);
         TextView howToApply = findViewById(R.id.tvHowToApply);

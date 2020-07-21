@@ -12,7 +12,7 @@ import com.dima.jobs.R;
 import com.dima.jobs.data.App;
 import com.dima.jobs.data.Job;
 import com.dima.jobs.data.JobFavoritesDao;
-import com.dima.jobs.data.JobFavoritesDatabase;
+import com.dima.jobs.data.JobsDatabase;
 import com.dima.jobs.utils.JobsAdapter;
 import com.dima.jobs.utils.JobsDataCreator;
 
@@ -37,13 +37,14 @@ public class JobsFragment extends Fragment {
     }
 
     private List<Job> updateFavorites() {
-        JobFavoritesDatabase jobFavoritesDatabase = App.getInstance().getDatabase();
-        JobFavoritesDao jobFavoritesDao = jobFavoritesDatabase.jobFavoritesDao();
+        JobsDatabase db = App.getInstance().getDatabase();
+        JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
         List<Job> jobsDb = jobFavoritesDao.getAll();
         List<Job> jobsServer = new JobsDataCreator().getVacanciesList();
         for (Job jobDb : jobsDb) {
             for (Job jobServer : jobsServer) {
                 if (jobDb.getId().equals(jobServer.getId())) {
+                    jobServer.databaseId = jobDb.getDatabaseId();
                     jobServer.setFavorite(true);
                 }
             }

@@ -6,6 +6,8 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import com.dima.jobs.R;
 import com.dima.jobs.ui.screens.favorites.FavoritesFragment;
@@ -24,7 +26,11 @@ public class MainActivity extends AppCompatActivity {
         final ProfileFragment profileFragment = new ProfileFragment();
         final FavoritesFragment favoritesFragment = new FavoritesFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, jobsFragment).commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, jobsFragment).commit();
+
+        final Toolbar toolbar = findViewById(R.id.tbMain);
+        toolbar.setTitle("Jobs list");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bnv);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -32,17 +38,25 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.naviJobs:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, jobsFragment).commit();
+                        changeFragment(jobsFragment);
+                        toolbar.setTitle("Jobs list");
                         break;
                     case R.id.naviProfile:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
+                        changeFragment(profileFragment);
+                        toolbar.setTitle("Profile");
                         break;
                     case R.id.naviFavorites:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, favoritesFragment).commit();
+                        changeFragment(favoritesFragment);
+                        toolbar.setTitle("Favorites");
                         break;
                 }
                 return true;
             }
         });
+    }
+
+    private void changeFragment(Fragment toChange) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, toChange).commit();
     }
 }

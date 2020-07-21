@@ -8,13 +8,13 @@ public class App extends Application {
 
     public static App instance;
 
-    private JobFavoritesDatabase database;
+    private JobsDatabase database;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
-        database = Room.databaseBuilder(this, JobFavoritesDatabase.class, "favorites")
+        database = Room.databaseBuilder(this, JobsDatabase.class, "favorites")
                 .allowMainThreadQueries()
                 .build();
     }
@@ -23,7 +23,7 @@ public class App extends Application {
         return instance;
     }
 
-    public JobFavoritesDatabase getDatabase() {
+    public JobsDatabase getDatabase() {
         return database;
     }
 }

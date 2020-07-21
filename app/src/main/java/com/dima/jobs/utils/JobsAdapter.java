@@ -6,12 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dima.jobs.R;
+import com.dima.jobs.data.App;
 import com.dima.jobs.data.Job;
+import com.dima.jobs.data.JobFavoritesDao;
+import com.dima.jobs.data.JobsDatabase;
 import com.dima.jobs.ui.screens.job.JobActivity;
 import com.squareup.picasso.Picasso;
 
@@ -76,12 +80,36 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
             location.setText(job.getLocation());
             type.setText(job.getType());
 
+            favoriteStar.setOnClickListener(new View.OnClickListener() {
+                JobsDatabase db = App.getInstance().getDatabase();
+                JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
+
+                @Override
+                public void onClick(View v) {
+                    if (!job.isFavorite()) {
+                        job.setFavorite(true);
+                        jobFavoritesDao.addFavorite(job);
+                        favoriteStar.setImageResource(R.drawable.ic_baseline_star_24);
+                        showToast("Added to favorites");
+                    } else {
+                        job.setFavorite(false);
+                        jobFavoritesDao.deleteFavorite(job);
+                        favoriteStar.setImageResource(R.drawable.ic_baseline_star_border_24);
+                        showToast("Removed from favorites");
+                    }
+                }
+            });
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     v.getContext().startActivity(new Intent(v.getContext(), JobActivity.class).putExtra("job", job));
                 }
             });
+        }
+
+        private void showToast(String text) {
+            Toast.makeText(itemView.getContext(), text, Toast.LENGTH_LONG).show();
         }
     }
 }
