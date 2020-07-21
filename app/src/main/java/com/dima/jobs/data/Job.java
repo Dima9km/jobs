@@ -8,8 +8,8 @@ import java.io.Serializable;
 @Entity(tableName = "favorites")
 public class Job implements Serializable {
 
-    @PrimaryKey
-    private long databaseId;
+    @PrimaryKey(autoGenerate = true)
+    public long databaseId;
     private boolean isFavorite;
     private String id;
     private String type;

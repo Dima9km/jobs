@@ -11,9 +11,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dima.jobs.R;
-import com.dima.jobs.utils.RecyclerViewAdapter;
+import com.dima.jobs.data.App;
+import com.dima.jobs.data.Job;
+import com.dima.jobs.data.JobFavoritesDao;
+import com.dima.jobs.data.JobFavoritesDatabase;
+import com.dima.jobs.utils.JobsAdapter;
+
+import java.util.List;
 
 public class FavoritesFragment extends Fragment {
+
+    JobFavoritesDatabase jobFavoritesDatabase = App.getInstance().getDatabase();
+    JobFavoritesDao jobFavoritesDao = jobFavoritesDatabase.jobFavoritesDao();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -23,17 +32,18 @@ public class FavoritesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        showJobsList();
+        showFavoritesList();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        showJobsList();
+        showFavoritesList();
     }
 
-    private void showJobsList() {
-        RecyclerView recyclerView = getView().findViewById(R.id.rclJobs);
-        recyclerView.setAdapter(new RecyclerViewAdapter());
+    private void showFavoritesList() {
+        List<Job> jobsDb = jobFavoritesDao.getAll();
+        RecyclerView recyclerJobs = getView().findViewById(R.id.rvJobs);
+        recyclerJobs.setAdapter(new JobsAdapter(jobsDb));
     }
 }

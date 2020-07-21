@@ -15,11 +15,15 @@ import com.dima.jobs.data.Job;
 import com.dima.jobs.ui.screens.job.JobActivity;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
 
-    ArrayList<Job> jobs = new JobsDataCreator().getVacanciesList();
+    List<Job> jobs;
+
+    public JobsAdapter(List<Job> jobs) {
+        this.jobs = jobs;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -55,8 +59,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         void bind(final Job job) {
-            Picasso.with(companyLogo.getContext()).load(job.getCompanyLogo()).placeholder(R.drawable.ic_baseline_hourglass_empty_24).error(R.drawable.ic_baseline_error_outline_24).into(companyLogo);
-            setUpFavoriteStar(job);
+            Picasso.with(companyLogo.getContext())
+                    .load(job.getCompanyLogo())
+                    .placeholder(R.drawable.ic_baseline_hourglass_empty_24)
+                    .error(R.drawable.ic_baseline_error_outline_24)
+                    .into(companyLogo);
+
+            if (job.isFavorite()) {
+                favoriteStar.setImageResource(R.drawable.ic_baseline_star_24);
+            } else {
+                favoriteStar.setImageResource(R.drawable.ic_baseline_star_border_24);
+            }
 
             company.setText(job.getCompany());
             title.setText(job.getTitle());
@@ -69,14 +82,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     v.getContext().startActivity(new Intent(v.getContext(), JobActivity.class).putExtra("job", job));
                 }
             });
-        }
-
-        void setUpFavoriteStar(Job job) {
-            if (job.isFavorite()) {
-                favoriteStar.setImageResource(R.drawable.ic_baseline_star_24);
-            } else {
-                favoriteStar.setImageResource(R.drawable.ic_baseline_star_border_24);
-            }
         }
     }
 }

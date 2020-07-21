@@ -9,7 +9,7 @@
     tools:context=".ui.screens.favorites.FavoritesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rclJobs"
+        android:id="@+id/rvJobs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

@@ -3,11 +3,12 @@ package com.dima.jobs.utils;
 import com.dima.jobs.data.Job;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class JobsDataCreator {
 
-    public ArrayList<Job> getVacanciesList() {
-        ArrayList<Job> list = new ArrayList<>();
+    public List<Job> getVacanciesList() {
+        List<Job> list = new ArrayList<>();
         Job job02 = new Job("2","Full Time",
                 "https://jobs.github.com/positions/9c481778-db91-41c6-882a-05d353968cc8",
                 "Wed Jun 03 01:53:19 UTC 2020",

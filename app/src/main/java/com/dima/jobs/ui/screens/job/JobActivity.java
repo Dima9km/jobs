@@ -23,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class JobActivity extends AppCompatActivity {
@@ -35,6 +36,9 @@ public class JobActivity extends AppCompatActivity {
     private TextView type;
     private TextView description;
     private TextView createdAt;
+
+    JobFavoritesDatabase jobFavoritesDatabase = App.getInstance().getDatabase();
+    JobFavoritesDao jobFavoritesDao = jobFavoritesDatabase.jobFavoritesDao();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,18 +69,19 @@ public class JobActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                JobFavoritesDatabase jobFavoritesDatabase = App.getInstance().getDatabase();
-                JobFavoritesDao jobFavoritesDao = jobFavoritesDatabase.jobFavoritesDao();
+
                 if (!job.isFavorite()) {
+                    job.setFavorite(true);
                     jobFavoritesDao.addFavorite(job);
                     toolbar.getMenu().getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_24));
-                    job.setFavorite(true);
                     showToast("Added to favorites");
                 } else {
+                    job.setFavorite(false);
                     jobFavoritesDao.deleteFavorite(job);
                     toolbar.getMenu().getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_border_24));
-                    job.setFavorite(false);
                     showToast("Removed from favorites");
+                    List<Job> temp = jobFavoritesDao.getAll();
+                    temp.get(0);
                 }
                 return true;
             }

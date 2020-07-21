@@ -32,13 +32,13 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.naviJobs:
-                        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, jobsFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, jobsFragment).commit();
                         break;
                     case R.id.naviProfile:
-                        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, profileFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
                         break;
                     case R.id.naviFavorites:
-                        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, favoritesFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, favoritesFragment).commit();
                         break;
                 }
                 return true;
