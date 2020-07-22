@@ -13,11 +13,12 @@ import com.dima.jobs.data.App;
 import com.dima.jobs.data.Job;
 import com.dima.jobs.data.JobFavoritesDao;
 import com.dima.jobs.data.JobsDatabase;
+import com.dima.jobs.utils.FragmentRefresher;
 import com.dima.jobs.utils.JobsAdapter;
 
 import java.util.List;
 
-public class FavoritesFragment extends Fragment {
+public class FavoritesFragment extends Fragment implements FragmentRefresher {
 
     JobsDatabase db = App.getInstance().getDatabase();
     JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
@@ -36,6 +37,11 @@ public class FavoritesFragment extends Fragment {
     private void showFavoritesList() {
         List<Job> jobsDb = jobFavoritesDao.getAll();
         RecyclerView recyclerJobs = getView().findViewById(R.id.rvJobs);
-        recyclerJobs.setAdapter(new JobsAdapter(jobsDb));
+        recyclerJobs.setAdapter(new JobsAdapter(jobsDb, (FragmentRefresher) this));
+    }
+
+    @Override
+    public void onDataChanged() {
+        showFavoritesList();
     }
 }

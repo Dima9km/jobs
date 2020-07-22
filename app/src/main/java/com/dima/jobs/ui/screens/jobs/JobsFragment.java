@@ -33,7 +33,7 @@ public class JobsFragment extends Fragment {
 
     private void showJobsList() {
         RecyclerView recyclerJobs = getView().findViewById(R.id.rvJobs);
-        recyclerJobs.setAdapter(new JobsAdapter(updateFavorites()));
+        recyclerJobs.setAdapter(new JobsAdapter(updateFavorites(), null));
     }
 
     private List<Job> updateFavorites() {

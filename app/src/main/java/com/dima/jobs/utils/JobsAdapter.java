@@ -25,8 +25,11 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
 
     List<Job> jobs;
 
-    public JobsAdapter(List<Job> jobs) {
+    public FragmentRefresher fragmentRefresher;
+
+    public JobsAdapter(List<Job> jobs, FragmentRefresher refresher) {
         this.jobs = jobs;
+        fragmentRefresher = refresher;
     }
 
     @Override
@@ -91,11 +94,13 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
                         jobFavoritesDao.addFavorite(job);
                         favoriteStar.setImageResource(R.drawable.ic_baseline_star_24);
                         showToast("Added to favorites");
+                        fragmentRefresher.onDataChanged();
                     } else {
                         job.setFavorite(false);
                         jobFavoritesDao.deleteFavorite(job);
                         favoriteStar.setImageResource(R.drawable.ic_baseline_star_border_24);
                         showToast("Removed from favorites");
+                        fragmentRefresher.onDataChanged();
                     }
                 }
             });

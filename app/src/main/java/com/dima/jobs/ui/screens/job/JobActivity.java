@@ -110,8 +110,8 @@ public class JobActivity extends AppCompatActivity {
         type.setText(job.getType());
         description.setText(Html.fromHtml(job.getDescription()));
         //converting date for createdAt
-        SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.getDefault());
-        SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
         Date receivedDate;
         String resultString = null;
         try {
@@ -119,7 +119,7 @@ public class JobActivity extends AppCompatActivity {
             resultString = outputFormat.format(receivedDate);
         } catch (ParseException e) {
             e.printStackTrace();
-            resultString = "Long time ago";
+            resultString = "-";
         }
         createdAt.setText("Created at: " + resultString);
         TextView howToApply = findViewById(R.id.tvHowToApply);
