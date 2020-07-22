@@ -24,21 +24,21 @@ import java.util.Locale;
 
 public class ProfileFragment extends Fragment {
 
-    TextView birthday;
-    EditText firstName;
-    EditText patronymic;
-    EditText lastName;
-    Spinner sex;
-    Button datePicker;
-    Button btnSave;
+    private TextView birthday;
+    private EditText firstName;
+    private EditText patronymic;
+    private EditText lastName;
+    private Spinner sex;
+    private Button datePicker;
+    private Button btnSave;
 
-    String FIRST_NAME = "first name";
-    String PATRONYMIC = "patronymic";
-    String LAST_NAME = "last name";
-    String SEX = "sex";
-    String BIRTHDAY = "birthday";
+    private String FIRSTNAME = "first name";
+    private String PATRONYMIC = "patronymic";
+    private String LASTNAME = "last name";
+    private String SEX = "sex";
+    private String BIRTHDAY = "birthday";
 
-    final Calendar pickedDate = Calendar.getInstance();
+    private final Calendar pickedDate = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -81,7 +81,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saveData();
-                showToast();
+                Toast.makeText(getContext(), "All data changed", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -97,9 +97,9 @@ public class ProfileFragment extends Fragment {
     private void saveData() {
         PreferenceManager.getDefaultSharedPreferences(getContext())
                 .edit()
-                .putString(FIRST_NAME, firstName.getText().toString())
+                .putString(FIRSTNAME, firstName.getText().toString())
                 .putString(PATRONYMIC, patronymic.getText().toString())
-                .putString(LAST_NAME, lastName.getText().toString())
+                .putString(LASTNAME, lastName.getText().toString())
                 .putInt(SEX, sex.getSelectedItemPosition())
                 .putString(BIRTHDAY, birthday.getText().toString())
                 .apply();
@@ -107,14 +107,10 @@ public class ProfileFragment extends Fragment {
 
     private void readData() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        firstName.setText(prefs.getString(FIRST_NAME, ""));
+        firstName.setText(prefs.getString(FIRSTNAME, ""));
         patronymic.setText(prefs.getString(PATRONYMIC, ""));
-        lastName.setText(prefs.getString(LAST_NAME, ""));
+        lastName.setText(prefs.getString(LASTNAME, ""));
         sex.setSelection(prefs.getInt(SEX, 1));
         birthday.setText(prefs.getString(BIRTHDAY, ""));
-    }
-
-    private void showToast() {
-        Toast.makeText(getContext(), "All data changed", Toast.LENGTH_LONG).show();
     }
 }

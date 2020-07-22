@@ -36,6 +36,8 @@ public class JobActivity extends AppCompatActivity {
     private TextView description;
     private TextView createdAt;
 
+    private final Toolbar toolbar = findViewById(R.id.tbJob);
+
     JobsDatabase db = App.getInstance().getDatabase();
     JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
 
@@ -50,7 +52,6 @@ public class JobActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        final Toolbar toolbar = findViewById(R.id.tbJob);
         toolbar.setSubtitle(job.getTitle());
         toolbar.setTitle(job.getCompany());
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -66,27 +67,18 @@ public class JobActivity extends AppCompatActivity {
                 if (!job.isFavorite()) {
                     job.setFavorite(true);
                     jobFavoritesDao.addFavorite(job);
-                    toolbar.getMenu().getItem(0)
-                            .setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_24));
+                    setToolbarIcon(R.drawable.ic_baseline_star_24);
                     showToast("Added to favorites");
                 } else {
                     job.setFavorite(false);
                     jobFavoritesDao.deleteFavorite(job);
-                    toolbar.getMenu().getItem(0)
-                            .setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_border_24));
+                    setToolbarIcon(R.drawable.ic_baseline_star_border_24);
                     showToast("Removed from favorites");
                 }
                 return true;
             }
         });
-
-        if (job.isFavorite()) {
-            toolbar.getMenu().getItem(0)
-                    .setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_24));
-        } else {
-            toolbar.getMenu().getItem(0)
-                    .setIcon(getResources().getDrawable(R.drawable.ic_baseline_star_border_24));
-        }
+        setToolbarIcon(job.isFavorite() ? R.drawable.ic_baseline_star_24 : R.drawable.ic_baseline_star_border_24);
     }
 
     private void initUI() {
@@ -154,5 +146,10 @@ public class JobActivity extends AppCompatActivity {
 
     private void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+    private void setToolbarIcon(int toolbarIcon) {
+        toolbar.getMenu().getItem(0)
+                .setIcon(getResources().getDrawable(toolbarIcon));
     }
 }

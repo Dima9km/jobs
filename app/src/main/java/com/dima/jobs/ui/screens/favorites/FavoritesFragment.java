@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +38,9 @@ public class FavoritesFragment extends Fragment implements FragmentRefresher {
     private void showFavoritesList() {
         List<Job> jobsDb = jobFavoritesDao.getAll();
         RecyclerView recyclerJobs = getView().findViewById(R.id.rvJobs);
+        TextView emptyText = getView().findViewById(R.id.tvEmpty);
+        recyclerJobs.setVisibility(jobsDb.isEmpty() ? View.GONE : View.VISIBLE);
+        emptyText.setVisibility(jobsDb.isEmpty() ? View.VISIBLE : View.GONE);
         recyclerJobs.setAdapter(new JobsAdapter(jobsDb, (FragmentRefresher) this));
     }
 

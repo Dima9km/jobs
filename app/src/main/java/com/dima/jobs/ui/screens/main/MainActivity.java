@@ -26,13 +26,12 @@ public class MainActivity extends AppCompatActivity {
         final ProfileFragment profileFragment = new ProfileFragment();
         final FavoritesFragment favoritesFragment = new FavoritesFragment();
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, jobsFragment).commit();
+        changeFragment(jobsFragment);
 
         final Toolbar toolbar = findViewById(R.id.tbMain);
         toolbar.setTitle("Jobs list");
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bnv);
+        final BottomNavigationView bottomNavigationView = findViewById(R.id.bnv);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dima.jobs.R;
@@ -27,7 +28,11 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
 
     public FragmentRefresher fragmentRefresher;
 
-    public JobsAdapter(List<Job> jobs, FragmentRefresher refresher) {
+    public JobsAdapter(List<Job> jobs) {
+        this.jobs = jobs;
+    }
+
+    public JobsAdapter(List<Job> jobs, @Nullable FragmentRefresher refresher) {
         this.jobs = jobs;
         fragmentRefresher = refresher;
     }
@@ -94,14 +99,15 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
                         jobFavoritesDao.addFavorite(job);
                         favoriteStar.setImageResource(R.drawable.ic_baseline_star_24);
                         showToast("Added to favorites");
-                        fragmentRefresher.onDataChanged();
                     } else {
                         job.setFavorite(false);
                         jobFavoritesDao.deleteFavorite(job);
                         favoriteStar.setImageResource(R.drawable.ic_baseline_star_border_24);
                         showToast("Removed from favorites");
-                        fragmentRefresher.onDataChanged();
                     }
+
+                    if (fragmentRefresher != null) fragmentRefresher.onDataChanged();
+
                 }
             });
 
