@@ -38,9 +38,11 @@ public class FavoritesFragment extends Fragment implements FragmentRefresher {
     private void showFavoritesList() {
         List<Job> jobsDb = jobFavoritesDao.getAll();
         RecyclerView recyclerJobs = getView().findViewById(R.id.rvJobs);
+
         TextView emptyText = getView().findViewById(R.id.tvEmpty);
         recyclerJobs.setVisibility(jobsDb.isEmpty() ? View.GONE : View.VISIBLE);
         emptyText.setVisibility(jobsDb.isEmpty() ? View.VISIBLE : View.GONE);
+
         recyclerJobs.setAdapter(new JobsAdapter(jobsDb, (FragmentRefresher) this));
     }
 
