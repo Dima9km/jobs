@@ -11,14 +11,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class JobsDownloader {
-    private List<Job> jobsNetwork = null;
-    private Downloader downloader;
 
-    public JobsDownloader(Downloader downloader) {
-        this.downloader = downloader;
+    Listener listener;
+
+    public JobsDownloader(Listener listener) {
+        this.listener = listener;
+        this.getJobs();
     }
 
-    public List<Job> getJobs() {
+    public void getJobs() {
         JobsApi jobsApi = NetworkHelper.getInstance().jobsRetrofit.create(JobsApi.class);
         Call<List<Job>> jobsCall = jobsApi.getJobsFromServer();
         jobsCall.enqueue(new Callback<List<Job>>() {
@@ -26,16 +27,18 @@ public class JobsDownloader {
             @Override
             public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
                 if (response.isSuccessful()) {
-                    jobsNetwork = response.body();
+                    listener.showLoader(false);
+                    listener.onGetData(response.body());
                 } else {
+                    listener.showLoader(false);
+                    listener.showMessage("Empty Data");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Job>> call, Throwable t) {
+                listener.showMessage(t.getMessage());
             }
         });
-
-        return null;
     }
 }
