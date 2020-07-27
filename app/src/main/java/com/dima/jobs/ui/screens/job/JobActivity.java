@@ -35,8 +35,7 @@ public class JobActivity extends AppCompatActivity {
     private TextView type;
     private TextView description;
     private TextView createdAt;
-
-    private final Toolbar toolbar = findViewById(R.id.tbJob);
+    private Toolbar toolbar;
 
     JobsDatabase db = App.getInstance().getDatabase();
     JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
@@ -44,6 +43,7 @@ public class JobActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         job = (Job) getIntent().getExtras().getSerializable("job");
         setContentView(R.layout.activity_job);
         initToolbar();
@@ -52,6 +52,8 @@ public class JobActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
+        toolbar = findViewById(R.id.tbJob);
+
         toolbar.setSubtitle(job.getTitle());
         toolbar.setTitle(job.getCompany());
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -101,7 +103,7 @@ public class JobActivity extends AppCompatActivity {
         location.setText(job.getLocation());
         type.setText(job.getType());
         description.setText(Html.fromHtml(job.getDescription()));
-        //converting date for createdAt
+
         SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
         Date receivedDate;
@@ -114,6 +116,7 @@ public class JobActivity extends AppCompatActivity {
             resultString = "-";
         }
         createdAt.setText("Created at: " + resultString);
+
         TextView howToApply = findViewById(R.id.tvHowToApply);
         howToApply.setText(Html.fromHtml(job.getHowToApply()));
         howToApply.setOnClickListener(new View.OnClickListener() {

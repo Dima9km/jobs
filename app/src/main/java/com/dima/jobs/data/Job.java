@@ -98,4 +98,5 @@ public class Job implements Serializable {
     public void setDatabaseId(long databaseId) {
         this.databaseId = databaseId;
     }
+
 }

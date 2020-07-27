@@ -13,12 +13,15 @@ import com.dima.jobs.data.App;
 import com.dima.jobs.data.Job;
 import com.dima.jobs.data.JobFavoritesDao;
 import com.dima.jobs.data.JobsDatabase;
+import com.dima.jobs.utils.Downloader;
 import com.dima.jobs.utils.JobsAdapter;
-import com.dima.jobs.utils.JobsDataCreator;
+import com.dima.jobs.utils.JobsDownloader;
 
 import java.util.List;
 
-public class JobsFragment extends Fragment {
+public class JobsFragment extends Fragment implements Downloader {
+
+    JobsDownloader jobsDownloader = new JobsDownloader(this);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,7 +43,8 @@ public class JobsFragment extends Fragment {
         JobsDatabase db = App.getInstance().getDatabase();
         JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
         List<Job> jobsDb = jobFavoritesDao.getAll();
-        List<Job> jobsServer = new JobsDataCreator().getVacanciesList();
+        List<Job> jobsServer = getData();
+
         for (Job jobDb : jobsDb) {
             for (Job jobServer : jobsServer) {
                 if (jobDb.getId().equals(jobServer.getId())) {
@@ -50,5 +54,10 @@ public class JobsFragment extends Fragment {
             }
         }
         return jobsServer;
+    }
+
+    @Override
+    public List<Job> getData() {
+        return jobsDownloader.getJobs();
     }
 }

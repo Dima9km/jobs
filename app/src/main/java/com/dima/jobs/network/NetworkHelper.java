@@ -1,34 +1,28 @@
 package com.dima.jobs.network;
 
-import com.dima.jobs.data.Job;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import java.util.List;
-
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkHelper {
-    private static NetworkHelper jobsInstance;
-    private static final String BASE_URL = "https://jobs.github.com/positions.json";
-    private Retrofit jobsRetrofit;
-
-    private NetworkHelper() {
+    public static NetworkHelper retrofitInstance;
+    private static final String BASEURL = "https://jobs.github.com";
+    public Retrofit jobsRetrofit;
+    public NetworkHelper() {
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).setLenient().create();
         jobsRetrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(BASEURL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
 
     public static NetworkHelper getInstance() {
-        if (jobsInstance == null) {
-            jobsInstance = new NetworkHelper();
+        if (retrofitInstance == null) {
+            retrofitInstance = new NetworkHelper();
         }
-        return jobsInstance;
+        return retrofitInstance;
     }
-
-    JobsApi jobsApi = getInstance().jobsRetrofit.create(JobsApi.class);
-    Call<List<Job>> jobs = jobsApi.getAllJobs();
-    jobs.e
-
 }
