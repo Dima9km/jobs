@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface Listener {
 
-    void showLoader(boolean setVisibility);
+    void showLoader(boolean visible);
 
     void onGetData(List<Job> jobs);
 

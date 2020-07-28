@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -24,8 +25,9 @@ public class JobsFragment extends Fragment {
 
     JobsDownloader jobsDownloader = new JobsDownloader(new Listener() {
         @Override
-        public void showLoader(boolean setVisibility) {
-            //TODO
+        public void showLoader(boolean visible) {
+            ProgressBar progressBar = getActivity().findViewById(R.id.pbJobs);
+            progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
 
         @Override
