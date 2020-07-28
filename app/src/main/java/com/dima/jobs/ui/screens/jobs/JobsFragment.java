@@ -18,12 +18,9 @@ import com.dima.jobs.utils.JobsAdapter;
 import com.dima.jobs.utils.JobsDownloader;
 import com.dima.jobs.utils.Listener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class JobsFragment extends Fragment {
-
-    List<Job> jobsServer = new ArrayList<>();
 
     JobsDownloader jobsDownloader = new JobsDownloader(new Listener() {
         @Override
@@ -33,22 +30,8 @@ public class JobsFragment extends Fragment {
 
         @Override
         public void onGetData(List<Job> jobs) {
-            jobsServer = jobs;
-            JobsDatabase db = App.getInstance().getDatabase();
-            JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
-            List<Job> jobsDb = jobFavoritesDao.getAll();
-
-            for (Job jobDb : jobsDb) {
-                for (Job jobServer : jobsServer) {
-                    if (jobDb.getId().equals(jobServer.getId())) {
-                        jobServer.databaseId = jobDb.getDatabaseId();
-                        jobServer.setFavorite(true);
-                    }
-                }
-            }
-            showJobsList();
+            showJobsList(formatJobs(jobs));
         }
-
 
         @Override
         public void showMessage(String message) {
@@ -64,11 +47,28 @@ public class JobsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        showJobsList();
+        jobsDownloader.getJobs();
     }
 
-    private void showJobsList() {
+    private void showJobsList(List<Job> jobsServer) {
         RecyclerView recyclerJobs = getView().findViewById(R.id.rvJobs);
         recyclerJobs.setAdapter(new JobsAdapter(jobsServer));
+    }
+
+    private List<Job> formatJobs(List<Job> jobs) {
+        List<Job> jobsServer = jobs;
+        JobsDatabase db = App.getInstance().getDatabase();
+        JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
+        List<Job> jobsDb = jobFavoritesDao.getAll();
+
+        for (Job jobDb : jobsDb) {
+            for (Job jobServer : jobsServer) {
+                if (jobDb.getId().equals(jobServer.getId())) {
+                    jobServer.databaseId = jobDb.getDatabaseId();
+                    jobServer.setFavorite(true);
+                }
+            }
+        }
+        return jobsServer;
     }
 }

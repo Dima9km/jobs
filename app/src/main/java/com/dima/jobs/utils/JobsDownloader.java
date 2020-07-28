@@ -16,7 +16,6 @@ public class JobsDownloader {
 
     public JobsDownloader(Listener listener) {
         this.listener = listener;
-        this.getJobs();
     }
 
     public void getJobs() {
