@@ -1,6 +1,6 @@
-package com.dima.jobs.utils;
+package com.dima.jobs.data.remote;
 
-import com.dima.jobs.data.Job;
+import com.dima.jobs.data.model.Job;
 import com.dima.jobs.network.JobsApi;
 import com.dima.jobs.network.NetworkHelper;
 
@@ -10,15 +10,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JobsDownloader {
+public class JobsRemoteDownloader {
 
-    Listener listener;
+    RemoteListener remoteListener;
 
-    public JobsDownloader(Listener listener) {
-        this.listener = listener;
+    public JobsRemoteDownloader(RemoteListener remoteListener) {
+        this.remoteListener = remoteListener;
     }
 
-    public void getJobs() {
+    public void getRemoteJobs() {
         JobsApi jobsApi = NetworkHelper.getInstance().jobsRetrofit.create(JobsApi.class);
         Call<List<Job>> jobsCall = jobsApi.getJobsFromServer();
         jobsCall.enqueue(new Callback<List<Job>>() {
@@ -26,17 +26,17 @@ public class JobsDownloader {
             @Override
             public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
                 if (response.isSuccessful()) {
-                    listener.showLoader(false);
-                    listener.onGetData(response.body());
+                    remoteListener.showLoader(false);
+                    remoteListener.onGetData(response.body());
                 } else {
-                    listener.showLoader(false);
-                    listener.showMessage("Empty Data");
+                    remoteListener.showLoader(false);
+                    remoteListener.showMessage("Empty Data");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Job>> call, Throwable t) {
-                listener.showMessage(t.getMessage());
+                remoteListener.showMessage(t.getMessage());
             }
         });
     }

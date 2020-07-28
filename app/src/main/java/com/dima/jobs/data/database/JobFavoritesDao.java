@@ -1,10 +1,12 @@
-package com.dima.jobs.data;
+package com.dima.jobs.data.database;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import com.dima.jobs.data.model.Job;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.dima.jobs.network;
 
-import com.dima.jobs.data.Job;
+import com.dima.jobs.data.model.Job;
 
 import java.util.List;
 

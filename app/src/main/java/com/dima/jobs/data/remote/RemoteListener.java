@@ -1,10 +1,10 @@
-package com.dima.jobs.utils;
+package com.dima.jobs.data.remote;
 
-import com.dima.jobs.data.Job;
+import com.dima.jobs.data.model.Job;
 
 import java.util.List;
 
-public interface Listener {
+public interface RemoteListener {
 
     void showLoader(boolean visible);
 

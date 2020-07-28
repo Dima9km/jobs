@@ -14,10 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.dima.jobs.R;
-import com.dima.jobs.data.App;
-import com.dima.jobs.data.Job;
-import com.dima.jobs.data.JobFavoritesDao;
-import com.dima.jobs.data.JobsDatabase;
+import com.dima.jobs.data.database.App;
+import com.dima.jobs.data.model.Job;
+import com.dima.jobs.data.database.JobFavoritesDao;
+import com.dima.jobs.data.database.JobsDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;

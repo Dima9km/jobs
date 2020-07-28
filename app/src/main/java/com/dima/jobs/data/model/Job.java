@@ -1,4 +1,4 @@
-package com.dima.jobs.data;
+package com.dima.jobs.data.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

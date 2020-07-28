@@ -1,4 +1,4 @@
-package com.dima.jobs.data;
+package com.dima.jobs.data.database;
 
 import android.app.Application;
 
