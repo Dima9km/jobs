@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dima.jobs.R;
-import com.dima.jobs.data.database.DbListener;
-import com.dima.jobs.data.database.JobsDatabaseDownloader;
 import com.dima.jobs.data.model.Job;
+import com.dima.jobs.data.repository.Repository;
+import com.dima.jobs.data.repository.RepositoryListener;
 import com.dima.jobs.utils.FragmentRefresher;
 import com.dima.jobs.utils.JobsAdapter;
 
@@ -20,10 +20,25 @@ import java.util.List;
 
 public class FavoritesFragment extends Fragment implements FragmentRefresher {
 
-    JobsDatabaseDownloader jobsDatabaseDownloader = new JobsDatabaseDownloader(new DbListener() {
+    Repository repository = new Repository(new RepositoryListener() {
         @Override
         public void onGetData(List<Job> jobs) {
             showFavoritesList(jobs);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onStartDownload() {
+
+        }
+
+        @Override
+        public void onEndDownload() {
+
         }
     });
 
@@ -35,7 +50,7 @@ public class FavoritesFragment extends Fragment implements FragmentRefresher {
     @Override
     public void onResume() {
         super.onResume();
-        jobsDatabaseDownloader.getJobsFromDb();
+        repository.getFavoriteJobs();
     }
 
     private void showFavoritesList(List<Job> jobsDb) {
@@ -45,11 +60,11 @@ public class FavoritesFragment extends Fragment implements FragmentRefresher {
         recyclerJobs.setVisibility(jobsDb.isEmpty() ? View.GONE : View.VISIBLE);
         emptyText.setVisibility(jobsDb.isEmpty() ? View.VISIBLE : View.GONE);
 
-        recyclerJobs.setAdapter(new JobsAdapter(jobsDb,  this));
+        recyclerJobs.setAdapter(new JobsAdapter(jobsDb, this));
     }
 
     @Override
     public void onDataChanged() {
-        jobsDatabaseDownloader.getJobsFromDb();
+        repository.getFavoriteJobs();
     }
 }

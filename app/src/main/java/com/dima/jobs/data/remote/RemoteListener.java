@@ -6,9 +6,12 @@ import java.util.List;
 
 public interface RemoteListener {
 
-    void showLoader(boolean visible);
-
     void onGetData(List<Job> jobs);
 
-    void showMessage(String message);
+    void onError(Throwable e);
+
+    void onStartDownload();
+
+    void onEndDownload();
+
 }

@@ -6,9 +6,9 @@ import java.util.List;
 
 public class JobsDatabaseDownloader {
 
-    DbListener dbListener;
+    DatabaseListener dbListener;
 
-    public JobsDatabaseDownloader(DbListener dbListener) {
+    public JobsDatabaseDownloader(DatabaseListener dbListener) {
         this.dbListener = dbListener;
     }
 

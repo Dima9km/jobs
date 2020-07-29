@@ -26,17 +26,16 @@ public class JobsRemoteDownloader {
             @Override
             public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
                 if (response.isSuccessful()) {
-                    remoteListener.showLoader(false);
                     remoteListener.onGetData(response.body());
                 } else {
-                    remoteListener.showLoader(false);
-                    remoteListener.showMessage("Empty Data");
+//                    remoteListener.showLoader(false);
+//                    remoteListener.showMessage("Empty Data");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Job>> call, Throwable t) {
-                remoteListener.showMessage(t.getMessage());
+//                remoteListener.showMessage(t.getMessage());
             }
         });
     }
