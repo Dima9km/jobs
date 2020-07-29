@@ -35,6 +35,8 @@ public class JobActivity extends AppCompatActivity {
     private TextView createdAt;
     private Toolbar toolbar;
 
+    private Repository repository = new Repository(null);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +65,12 @@ public class JobActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if (!job.isFavorite()) {
                     job.setFavorite(true);
-                    Repository.addFavorite(job);
+                    repository.addFavorite(job);
                     setToolbarIcon(R.drawable.ic_baseline_star_24);
                     showToast("Added to favorites");
                 } else {
                     job.setFavorite(false);
-                    Repository.deleteFavorite(job);
+                    repository.deleteFavorite(job);
                     setToolbarIcon(R.drawable.ic_baseline_star_border_24);
                     showToast("Removed from favorites");
                 }
@@ -102,7 +104,7 @@ public class JobActivity extends AppCompatActivity {
         SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
         Date receivedDate;
-        String resultString = null;
+        String resultString;
         try {
             receivedDate = inputFormat.parse(job.getCreatedAt());
             resultString = outputFormat.format(receivedDate);

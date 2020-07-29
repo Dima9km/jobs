@@ -11,6 +11,7 @@ public class NetworkHelper {
     public static NetworkHelper retrofitInstance;
     private static final String BASEURL = "https://jobs.github.com";
     public Retrofit jobsRetrofit;
+
     public NetworkHelper() {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).setLenient().create();
         jobsRetrofit = new Retrofit.Builder()

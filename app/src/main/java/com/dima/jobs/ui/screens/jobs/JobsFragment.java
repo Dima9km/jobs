@@ -23,7 +23,7 @@ public class JobsFragment extends Fragment {
     Repository repository = new Repository(new RepositoryListener() {
         @Override
         public void onGetData(List<Job> jobs) {
-            showJobsList(Repository.formatJobs(jobs));
+            showJobsList(repository.formatJobs(jobs));
         }
 
         @Override
@@ -57,7 +57,7 @@ public class JobsFragment extends Fragment {
 
     private void showJobsList(List<Job> jobsServer) {
         RecyclerView recyclerJobs = getView().findViewById(R.id.rvJobs);
-        recyclerJobs.setAdapter(new JobsAdapter(jobsServer));
+        recyclerJobs.setAdapter(new JobsAdapter(jobsServer, repository));
     }
 
 

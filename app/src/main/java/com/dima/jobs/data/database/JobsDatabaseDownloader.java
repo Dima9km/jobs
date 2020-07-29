@@ -6,18 +6,18 @@ import java.util.List;
 
 public class JobsDatabaseDownloader {
 
-    DatabaseListener dbListener;
+    DatabaseListener databaseListener;
 
-    public JobsDatabaseDownloader(DatabaseListener dbListener) {
-        this.dbListener = dbListener;
+    public JobsDatabaseDownloader(DatabaseListener databaseListener) {
+        this.databaseListener = databaseListener;
     }
 
     public void getJobsFromDb() {
-        dbListener.onStartDownload();
+        databaseListener.onStartDownload();
         JobsDatabase db = App.getInstance().getDatabase();
         JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
         List<Job> jobsFromDb = jobFavoritesDao.getAll();
-        dbListener.onGetData(jobsFromDb);
-        dbListener.onEndDownload();
+        databaseListener.onGetData(jobsFromDb);
+        databaseListener.onEndDownload();
     }
 }

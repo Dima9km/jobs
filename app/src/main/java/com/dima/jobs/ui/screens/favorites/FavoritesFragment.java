@@ -61,7 +61,7 @@ public class FavoritesFragment extends Fragment implements FragmentRefresher {
         recyclerJobs.setVisibility(jobsDb.isEmpty() ? View.GONE : View.VISIBLE);
         emptyText.setVisibility(jobsDb.isEmpty() ? View.VISIBLE : View.GONE);
 
-        recyclerJobs.setAdapter(new JobsAdapter(jobsDb, this));
+        recyclerJobs.setAdapter(new JobsAdapter(jobsDb, this, repository));
     }
 
     @Override

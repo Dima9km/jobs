@@ -14,6 +14,8 @@ import java.util.List;
 public class Repository {
 
     private RepositoryListener repositoryListener;
+    private JobsDatabase db = App.getInstance().getDatabase();
+    private JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
 
     public Repository(RepositoryListener repositoryListener) {
         this.repositoryListener = repositoryListener;
@@ -69,32 +71,25 @@ public class Repository {
         }).getRemoteJobs();
     }
 
-    public static void addFavorite(Job job) {
-        JobsDatabase db = App.getInstance().getDatabase();
-        JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
+    public void addFavorite(Job job) {
         jobFavoritesDao.addFavorite(job);
     }
 
-    public static void deleteFavorite(Job job) {
-        JobsDatabase db = App.getInstance().getDatabase();
-        JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
+    public void deleteFavorite(Job job) {
         jobFavoritesDao.deleteFavorite(job);
     }
 
-    public static List<Job> formatJobs(List<Job> jobs) {
-        List<Job> jobsServer = jobs;
-        JobsDatabase db = App.getInstance().getDatabase();
-        JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
+    public List<Job> formatJobs(List<Job> jobs) {
         List<Job> jobsDb = jobFavoritesDao.getAll();
 
         for (Job jobDb : jobsDb) {
-            for (Job jobServer : jobsServer) {
+            for (Job jobServer : jobs) {
                 if (jobDb.getId().equals(jobServer.getId())) {
                     jobServer.databaseId = jobDb.getDatabaseId();
                     jobServer.setFavorite(true);
                 }
             }
         }
-        return jobsServer;
+        return jobs;
     }
 }
