@@ -15,12 +15,7 @@ public class Repository {
         this.repositoryListener = repositoryListener;
     }
 
-    public List<Job> getJobsFromDb() {
-        return jobsDb;
+    public void getJobs() {
+        //TODO
     }
-
-    public List<Job> getJobsFromServer() {
-        return jobsServer;
-    }
-
 }

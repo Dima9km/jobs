@@ -110,7 +110,7 @@ public class ProfileFragment extends Fragment {
         firstName.setText(prefs.getString(FIRSTNAME, ""));
         patronymic.setText(prefs.getString(PATRONYMIC, ""));
         lastName.setText(prefs.getString(LASTNAME, ""));
-        sex.setSelection(prefs.getInt(SEX, 1));
+        sex.setSelection(prefs.getInt(SEX, 0));
         birthday.setText(prefs.getString(BIRTHDAY, ""));
     }
 }

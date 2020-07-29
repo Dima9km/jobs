@@ -10,10 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dima.jobs.R;
-import com.dima.jobs.data.database.App;
+import com.dima.jobs.data.database.DbListener;
+import com.dima.jobs.data.database.JobsDatabaseDownloader;
 import com.dima.jobs.data.model.Job;
-import com.dima.jobs.data.database.JobFavoritesDao;
-import com.dima.jobs.data.database.JobsDatabase;
 import com.dima.jobs.utils.FragmentRefresher;
 import com.dima.jobs.utils.JobsAdapter;
 
@@ -21,8 +20,12 @@ import java.util.List;
 
 public class FavoritesFragment extends Fragment implements FragmentRefresher {
 
-    JobsDatabase db = App.getInstance().getDatabase();
-    JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
+    JobsDatabaseDownloader jobsDatabaseDownloader = new JobsDatabaseDownloader(new DbListener() {
+        @Override
+        public void onGetData(List<Job> jobs) {
+            showFavoritesList(jobs);
+        }
+    });
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,11 +35,10 @@ public class FavoritesFragment extends Fragment implements FragmentRefresher {
     @Override
     public void onResume() {
         super.onResume();
-        showFavoritesList();
+        jobsDatabaseDownloader.getJobsFromDb();
     }
 
-    private void showFavoritesList() {
-        List<Job> jobsDb = jobFavoritesDao.getAll();
+    private void showFavoritesList(List<Job> jobsDb) {
         RecyclerView recyclerJobs = getView().findViewById(R.id.rvJobs);
 
         TextView emptyText = getView().findViewById(R.id.tvEmpty);
@@ -48,6 +50,6 @@ public class FavoritesFragment extends Fragment implements FragmentRefresher {
 
     @Override
     public void onDataChanged() {
-        showFavoritesList();
+        jobsDatabaseDownloader.getJobsFromDb();
     }
 }

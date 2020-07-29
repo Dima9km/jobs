@@ -5,6 +5,6 @@ import com.dima.jobs.data.model.Job;
 import java.util.List;
 
 public interface DbListener {
-    void onGetDbData(List<Job> jobs);
+    void onGetData(List<Job> jobs);
 
 }
