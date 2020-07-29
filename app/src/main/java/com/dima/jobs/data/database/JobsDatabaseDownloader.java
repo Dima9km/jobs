@@ -13,9 +13,11 @@ public class JobsDatabaseDownloader {
     }
 
     public void getJobsFromDb() {
+        dbListener.onStartDownload();
         JobsDatabase db = App.getInstance().getDatabase();
         JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
         List<Job> jobsFromDb = jobFavoritesDao.getAll();
         dbListener.onGetData(jobsFromDb);
+        dbListener.onEndDownload();
     }
 }

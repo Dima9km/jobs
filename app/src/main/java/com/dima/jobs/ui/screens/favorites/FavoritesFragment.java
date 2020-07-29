@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,18 +28,18 @@ public class FavoritesFragment extends Fragment implements FragmentRefresher {
         }
 
         @Override
-        public void onError(Throwable e) {
-
+        public void onError(String message) {
+            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onStartDownload() {
-
+            //todo
         }
 
         @Override
         public void onEndDownload() {
-
+            //todo
         }
     });
 

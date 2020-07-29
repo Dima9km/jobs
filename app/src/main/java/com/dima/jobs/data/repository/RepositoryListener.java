@@ -8,7 +8,7 @@ public interface RepositoryListener {
 
     void onGetData(List<Job> jobs);
 
-    void onError(Throwable e);
+    void onError(String message);
 
     void onStartDownload();
 

@@ -14,10 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.dima.jobs.R;
-import com.dima.jobs.data.database.App;
 import com.dima.jobs.data.model.Job;
-import com.dima.jobs.data.database.JobFavoritesDao;
-import com.dima.jobs.data.database.JobsDatabase;
+import com.dima.jobs.data.repository.Repository;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -36,9 +34,6 @@ public class JobActivity extends AppCompatActivity {
     private TextView description;
     private TextView createdAt;
     private Toolbar toolbar;
-
-    JobsDatabase db = App.getInstance().getDatabase();
-    JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +63,12 @@ public class JobActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if (!job.isFavorite()) {
                     job.setFavorite(true);
-                    jobFavoritesDao.addFavorite(job);
+                    Repository.addFavorite(job);
                     setToolbarIcon(R.drawable.ic_baseline_star_24);
                     showToast("Added to favorites");
                 } else {
                     job.setFavorite(false);
-                    jobFavoritesDao.deleteFavorite(job);
+                    Repository.deleteFavorite(job);
                     setToolbarIcon(R.drawable.ic_baseline_star_border_24);
                     showToast("Removed from favorites");
                 }

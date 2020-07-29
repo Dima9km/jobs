@@ -21,21 +21,23 @@ public class JobsRemoteDownloader {
     public void getRemoteJobs() {
         JobsApi jobsApi = NetworkHelper.getInstance().jobsRetrofit.create(JobsApi.class);
         Call<List<Job>> jobsCall = jobsApi.getJobsFromServer();
+        remoteListener.onStartDownload();
         jobsCall.enqueue(new Callback<List<Job>>() {
 
             @Override
             public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
                 if (response.isSuccessful()) {
+                    remoteListener.onEndDownload();
                     remoteListener.onGetData(response.body());
                 } else {
-//                    remoteListener.showLoader(false);
-//                    remoteListener.showMessage("Empty Data");
+                    remoteListener.onEndDownload();
+                    remoteListener.onError("Empty Data");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Job>> call, Throwable t) {
-//                remoteListener.showMessage(t.getMessage());
+                remoteListener.onError(t.getMessage());
             }
         });
     }
