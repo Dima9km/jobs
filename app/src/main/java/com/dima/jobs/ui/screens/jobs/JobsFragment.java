@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -14,16 +13,22 @@ import com.dima.jobs.R;
 import com.dima.jobs.data.model.Job;
 import com.dima.jobs.data.repository.Repository;
 import com.dima.jobs.data.repository.RepositoryListener;
-import com.dima.jobs.utils.JobsAdapter;
 
 import java.util.List;
 
 public class JobsFragment extends Fragment {
 
-    Repository repository = new Repository(new RepositoryListener() {
+
+
+    private Repository repository = new Repository(new RepositoryListener() {
+        @Override
+        public void onStartDownload() {
+            getView().findViewById(R.id.pbJobs).setVisibility(View.VISIBLE);
+        }
+
         @Override
         public void onGetData(List<Job> jobs) {
-            showJobsList(repository.formatJobs(jobs));
+            showJobsList(jobs);
         }
 
         @Override
@@ -32,15 +37,8 @@ public class JobsFragment extends Fragment {
         }
 
         @Override
-        public void onStartDownload() {
-            ProgressBar progressBar = getActivity().findViewById(R.id.pbJobs);
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
         public void onEndDownload() {
-            ProgressBar progressBar = getActivity().findViewById(R.id.pbJobs);
-            progressBar.setVisibility(View.GONE);
+           getView().findViewById(R.id.pbJobs).setVisibility(View.GONE);
         }
     });
 

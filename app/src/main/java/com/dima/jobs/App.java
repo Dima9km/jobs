@@ -1,8 +1,10 @@
-package com.dima.jobs.data.database;
+package com.dima.jobs;
 
 import android.app.Application;
 
 import androidx.room.Room;
+
+import com.dima.jobs.data.database.JobsDatabase;
 
 public class App extends Application {
 

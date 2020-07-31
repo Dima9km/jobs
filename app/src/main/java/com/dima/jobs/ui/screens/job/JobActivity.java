@@ -35,13 +35,14 @@ public class JobActivity extends AppCompatActivity {
     private TextView createdAt;
     private Toolbar toolbar;
 
-    private Repository repository = new Repository(null);
+    private Repository repository = new Repository();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         job = (Job) getIntent().getExtras().getSerializable("job");
+
         setContentView(R.layout.activity_job);
         initToolbar();
         initUI();
@@ -50,7 +51,6 @@ public class JobActivity extends AppCompatActivity {
 
     private void initToolbar() {
         toolbar = findViewById(R.id.tbJob);
-
         toolbar.setSubtitle(job.getTitle());
         toolbar.setTitle(job.getCompany());
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -122,6 +122,7 @@ public class JobActivity extends AppCompatActivity {
                 onClickHelper();
             }
         });
+
         TextView url = findViewById(R.id.tvUrl);
         url.setText("See more: " + Html.fromHtml(job.getUrl()));
         url.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +131,8 @@ public class JobActivity extends AppCompatActivity {
                 onClickHelper();
             }
         });
-        final TextView companyUrl = findViewById(R.id.tvCompanyUrl);
+
+        TextView companyUrl = findViewById(R.id.tvCompanyUrl);
         companyUrl.setText("Website: " + job.getCompanyUrl());
         companyUrl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +152,6 @@ public class JobActivity extends AppCompatActivity {
 
     private void setToolbarIcon(int toolbarIcon) {
         toolbar.getMenu().getItem(0)
-                .setIcon(getResources().getDrawable(toolbarIcon));
+                .setIcon(toolbarIcon);
     }
 }

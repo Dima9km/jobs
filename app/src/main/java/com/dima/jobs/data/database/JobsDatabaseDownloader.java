@@ -1,23 +1,12 @@
 package com.dima.jobs.data.database;
 
-import com.dima.jobs.data.model.Job;
-
-import java.util.List;
+import com.dima.jobs.App;
 
 public class JobsDatabaseDownloader {
 
-    DatabaseListener databaseListener;
-
-    public JobsDatabaseDownloader(DatabaseListener databaseListener) {
-        this.databaseListener = databaseListener;
-    }
-
-    public void getJobsFromDb() {
+    public void getJobsFromDb(DatabaseListener databaseListener) {
         databaseListener.onStartDownload();
-        JobsDatabase db = App.getInstance().getDatabase();
-        JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
-        List<Job> jobsFromDb = jobFavoritesDao.getAll();
-        databaseListener.onGetData(jobsFromDb);
+        databaseListener.onGetData(App.getInstance().getDatabase().jobFavoritesDao().getAll());
         databaseListener.onEndDownload();
     }
 }

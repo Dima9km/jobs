@@ -1,6 +1,6 @@
 package com.dima.jobs.data.repository;
 
-import com.dima.jobs.data.database.App;
+import com.dima.jobs.App;
 import com.dima.jobs.data.database.DatabaseListener;
 import com.dima.jobs.data.database.JobFavoritesDao;
 import com.dima.jobs.data.database.JobsDatabase;
@@ -21,8 +21,17 @@ public class Repository {
         this.repositoryListener = repositoryListener;
     }
 
+    public Repository() {
+
+    }
+
     public void getFavoriteJobs() {
-        new JobsDatabaseDownloader(new DatabaseListener() {
+        new JobsDatabaseDownloader().getJobsFromDb(new DatabaseListener() {
+
+            @Override
+            public void onStartDownload() {
+                repositoryListener.onStartDownload();
+            }
 
             @Override
             public void onGetData(List<Job> jobs) {
@@ -35,22 +44,23 @@ public class Repository {
             }
 
             @Override
-            public void onStartDownload() {
-                repositoryListener.onStartDownload();
-            }
-
-            @Override
             public void onEndDownload() {
                 repositoryListener.onEndDownload();
             }
-        }).getJobsFromDb();
+        });
     }
 
     public void getJobs() {
-        new JobsRemoteDownloader(new RemoteListener() {
+        new JobsRemoteDownloader().getRemoteJobs(new RemoteListener() {
+
+            @Override
+            public void onStartDownload() {
+                repositoryListener.onStartDownload();
+            }
 
             @Override
             public void onGetData(List<Job> jobs) {
+                formatJobs(jobs);
                 repositoryListener.onGetData(jobs);
             }
 
@@ -60,15 +70,10 @@ public class Repository {
             }
 
             @Override
-            public void onStartDownload() {
-                repositoryListener.onStartDownload();
-            }
-
-            @Override
             public void onEndDownload() {
                 repositoryListener.onEndDownload();
             }
-        }).getRemoteJobs();
+        });
     }
 
     public void addFavorite(Job job) {
@@ -79,10 +84,8 @@ public class Repository {
         jobFavoritesDao.deleteFavorite(job);
     }
 
-    public List<Job> formatJobs(List<Job> jobs) {
-        List<Job> jobsDb = jobFavoritesDao.getAll();
-
-        for (Job jobDb : jobsDb) {
+    public void formatJobs(List<Job> jobs) {
+        for (Job jobDb : jobFavoritesDao.getAll()) {
             for (Job jobServer : jobs) {
                 if (jobDb.getId().equals(jobServer.getId())) {
                     jobServer.databaseId = jobDb.getDatabaseId();
@@ -90,6 +93,5 @@ public class Repository {
                 }
             }
         }
-        return jobs;
     }
 }

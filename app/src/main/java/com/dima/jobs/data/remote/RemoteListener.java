@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface RemoteListener {
 
+    void onStartDownload();
+
     void onGetData(List<Job> jobs);
 
     void onError(String message);
-
-    void onStartDownload();
 
     void onEndDownload();
 

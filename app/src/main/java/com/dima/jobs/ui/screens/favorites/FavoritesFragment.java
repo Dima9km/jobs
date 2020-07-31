@@ -15,13 +15,18 @@ import com.dima.jobs.data.model.Job;
 import com.dima.jobs.data.repository.Repository;
 import com.dima.jobs.data.repository.RepositoryListener;
 import com.dima.jobs.utils.FragmentRefresher;
-import com.dima.jobs.utils.JobsAdapter;
+import com.dima.jobs.ui.screens.jobs.JobsAdapter;
 
 import java.util.List;
 
 public class FavoritesFragment extends Fragment implements FragmentRefresher {
 
-    Repository repository = new Repository(new RepositoryListener() {
+    private Repository repository = new Repository(new RepositoryListener() {
+        @Override
+        public void onStartDownload() {
+            //todo
+        }
+
         @Override
         public void onGetData(List<Job> jobs) {
             showFavoritesList(jobs);
@@ -30,11 +35,6 @@ public class FavoritesFragment extends Fragment implements FragmentRefresher {
         @Override
         public void onError(String message) {
             Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onStartDownload() {
-            //todo
         }
 
         @Override
@@ -54,18 +54,18 @@ public class FavoritesFragment extends Fragment implements FragmentRefresher {
         repository.getFavoriteJobs();
     }
 
-    private void showFavoritesList(List<Job> jobsDb) {
-        RecyclerView recyclerJobs = getView().findViewById(R.id.rvJobs);
-
-        TextView emptyText = getView().findViewById(R.id.tvEmpty);
-        recyclerJobs.setVisibility(jobsDb.isEmpty() ? View.GONE : View.VISIBLE);
-        emptyText.setVisibility(jobsDb.isEmpty() ? View.VISIBLE : View.GONE);
-
-        recyclerJobs.setAdapter(new JobsAdapter(jobsDb, this, repository));
-    }
-
     @Override
     public void onDataChanged() {
         repository.getFavoriteJobs();
+    }
+
+    private void showFavoritesList(List<Job> jobs) {
+        RecyclerView recyclerJobs = getView().findViewById(R.id.rvJobs);
+        TextView emptyText = getView().findViewById(R.id.tvEmpty);
+
+        recyclerJobs.setVisibility(jobs.isEmpty() ? View.GONE : View.VISIBLE);
+        emptyText.setVisibility(jobs.isEmpty() ? View.VISIBLE : View.GONE);
+
+        recyclerJobs.setAdapter(new JobsAdapter(jobs, this, repository));
     }
 }

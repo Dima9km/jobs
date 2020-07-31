@@ -1,4 +1,4 @@
-package com.dima.jobs.utils;
+package com.dima.jobs.ui.screens.jobs;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -16,13 +16,14 @@ import com.dima.jobs.R;
 import com.dima.jobs.data.model.Job;
 import com.dima.jobs.data.repository.Repository;
 import com.dima.jobs.ui.screens.job.JobActivity;
+import com.dima.jobs.utils.FragmentRefresher;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
 
-    List<Job> jobs;
+    private List<Job> jobs;
 
     private FragmentRefresher fragmentRefresher;
     private Repository repository;

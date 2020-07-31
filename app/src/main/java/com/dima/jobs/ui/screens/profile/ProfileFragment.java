@@ -39,7 +39,7 @@ public class ProfileFragment extends Fragment {
     private String BIRTHDAY = "birthday";
 
     private final Calendar pickedDate = Calendar.getInstance();
-    DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+    private DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             pickedDate.set(Calendar.YEAR, year);
@@ -52,12 +52,18 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initUI();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        initUI();
         readData();
     }
 
@@ -94,6 +100,15 @@ public class ProfileFragment extends Fragment {
                 .show();
     }
 
+    private void readData() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        firstName.setText(prefs.getString(FIRSTNAME, ""));
+        patronymic.setText(prefs.getString(PATRONYMIC, ""));
+        lastName.setText(prefs.getString(LASTNAME, ""));
+        sex.setSelection(prefs.getInt(SEX, 0));
+        birthday.setText(prefs.getString(BIRTHDAY, ""));
+    }
+
     private void saveData() {
         PreferenceManager.getDefaultSharedPreferences(getContext())
                 .edit()
@@ -103,14 +118,5 @@ public class ProfileFragment extends Fragment {
                 .putInt(SEX, sex.getSelectedItemPosition())
                 .putString(BIRTHDAY, birthday.getText().toString())
                 .apply();
-    }
-
-    private void readData() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        firstName.setText(prefs.getString(FIRSTNAME, ""));
-        patronymic.setText(prefs.getString(PATRONYMIC, ""));
-        lastName.setText(prefs.getString(LASTNAME, ""));
-        sex.setSelection(prefs.getInt(SEX, 0));
-        birthday.setText(prefs.getString(BIRTHDAY, ""));
     }
 }
