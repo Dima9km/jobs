@@ -18,8 +18,6 @@ import java.util.List;
 
 public class JobsFragment extends Fragment {
 
-
-
     private Repository repository = new Repository(new RepositoryListener() {
         @Override
         public void onStartDownload() {
@@ -38,7 +36,7 @@ public class JobsFragment extends Fragment {
 
         @Override
         public void onEndDownload() {
-           getView().findViewById(R.id.pbJobs).setVisibility(View.GONE);
+            getView().findViewById(R.id.pbJobs).setVisibility(View.GONE);
         }
     });
 
