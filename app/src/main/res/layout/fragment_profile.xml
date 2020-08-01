@@ -53,6 +53,13 @@
         android:entries="@array/sex"
         android:padding="8dp" />
 
+    <Spinner
+        android:id="@+id/spLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/location"
+        android:padding="8dp" />
+
     <TextView
         android:id="@+id/tvBirthdayText"
         android:layout_width="match_parent"

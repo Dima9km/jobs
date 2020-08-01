@@ -1,7 +1,14 @@
 <resources>
-    <string name="app_name">jobs</string>
+    <string name="app_name">Jobs</string>
     <string-array name="sex">
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+    <string-array name="location">
+        <item>Berlin</item>
+        <item>New York</item>
+        <item>Madrid</item>
+    </string-array>
+
 </resources>

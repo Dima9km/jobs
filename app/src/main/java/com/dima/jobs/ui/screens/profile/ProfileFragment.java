@@ -14,6 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.dima.jobs.R;
@@ -29,6 +31,7 @@ public class ProfileFragment extends Fragment {
     private EditText patronymic;
     private EditText lastName;
     private Spinner sex;
+    private Spinner userLocation;
     private Button datePicker;
     private Button btnSave;
 
@@ -36,6 +39,7 @@ public class ProfileFragment extends Fragment {
     private String PATRONYMIC = "patronymic";
     private String LASTNAME = "last name";
     private String SEX = "sex";
+    private String USERLOCATION = "user location";
     private String BIRTHDAY = "birthday";
 
     private final Calendar pickedDate = Calendar.getInstance();
@@ -49,11 +53,16 @@ public class ProfileFragment extends Fragment {
         }
     };
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        initUI();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initUI();
     }
 
     @Override
@@ -67,6 +76,7 @@ public class ProfileFragment extends Fragment {
         patronymic = getView().findViewById(R.id.etPatronymic);
         lastName = getView().findViewById(R.id.etLastName);
         sex = getView().findViewById(R.id.spSex);
+        userLocation = getView().findViewById(R.id.spLocation);
         birthday = getView().findViewById(R.id.tvBirthdayText);
 
         datePicker = getView().findViewById(R.id.btnDatePicker);
@@ -101,6 +111,7 @@ public class ProfileFragment extends Fragment {
         patronymic.setText(prefs.getString(PATRONYMIC, ""));
         lastName.setText(prefs.getString(LASTNAME, ""));
         sex.setSelection(prefs.getInt(SEX, 0));
+        userLocation.setSelection(prefs.getInt(USERLOCATION, 1));
         birthday.setText(prefs.getString(BIRTHDAY, ""));
     }
 
@@ -111,6 +122,7 @@ public class ProfileFragment extends Fragment {
                 .putString(PATRONYMIC, patronymic.getText().toString())
                 .putString(LASTNAME, lastName.getText().toString())
                 .putInt(SEX, sex.getSelectedItemPosition())
+                .putInt(USERLOCATION, userLocation.getSelectedItemPosition())
                 .putString(BIRTHDAY, birthday.getText().toString())
                 .apply();
     }
