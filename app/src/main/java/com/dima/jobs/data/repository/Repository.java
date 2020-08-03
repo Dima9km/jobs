@@ -1,6 +1,10 @@
 package com.dima.jobs.data.repository;
 
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+
 import com.dima.jobs.App;
+import com.dima.jobs.R;
 import com.dima.jobs.data.database.DatabaseListener;
 import com.dima.jobs.data.database.JobFavoritesDao;
 import com.dima.jobs.data.database.JobsDatabase;
@@ -14,6 +18,7 @@ import java.util.List;
 public class Repository {
 
     private RepositoryListener repositoryListener;
+    private String location;
     private JobsDatabase db = App.getInstance().getDatabase();
     private JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
 
@@ -22,7 +27,6 @@ public class Repository {
     }
 
     public Repository() {
-
     }
 
     public void getFavoriteJobs() {
@@ -73,7 +77,7 @@ public class Repository {
             public void onEndDownload() {
                 repositoryListener.onEndDownload();
             }
-        });
+        }, location);
     }
 
     public void addFavorite(Job job) {
@@ -93,5 +97,9 @@ public class Repository {
                 }
             }
         }
+    }
+
+    public void setLocation(SharedPreferences preferences, Resources resources) {
+        this.location = resources.getStringArray(R.array.location)[preferences.getInt("user location", 1)];
     }
 }

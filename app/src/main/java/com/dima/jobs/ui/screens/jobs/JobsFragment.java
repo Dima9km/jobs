@@ -1,11 +1,13 @@
 package com.dima.jobs.ui.screens.jobs;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +48,12 @@ public class JobsFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        repository.setLocation(PreferenceManager.getDefaultSharedPreferences(getContext()), getContext().getResources());
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         repository.getJobs();
@@ -55,6 +63,4 @@ public class JobsFragment extends Fragment {
         RecyclerView recyclerJobs = getView().findViewById(R.id.rvJobs);
         recyclerJobs.setAdapter(new JobsAdapter(jobsServer, repository));
     }
-
-
 }

@@ -12,19 +12,18 @@ import retrofit2.Response;
 
 public class JobsRemoteDownloader {
 
-    public void getRemoteJobs(RemoteListener remoteListener) {
+    public void getRemoteJobs(RemoteListener remoteListener, String location) {
         JobsApi jobsApi = NetworkHelper.getInstance().jobsRetrofit.create(JobsApi.class);
-        Call<List<Job>> jobsCall = jobsApi.getJobsFromServer();
+        Call<List<Job>> jobsCall = jobsApi.getJobsFromServer(location);
         remoteListener.onStartDownload();
 
         jobsCall.enqueue(new Callback<List<Job>>() {
             @Override
             public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
+                remoteListener.onEndDownload();
                 if (response.isSuccessful()) {
-                    remoteListener.onEndDownload();
                     remoteListener.onGetData(response.body());
                 } else {
-                    remoteListener.onEndDownload();
                     remoteListener.onError("HTTP Error " + response.code());
                 }
             }
