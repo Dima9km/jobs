@@ -50,7 +50,8 @@ public class JobsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        repository.setLocation(PreferenceManager.getDefaultSharedPreferences(getContext()), getContext().getResources());
+        repository.setPreferences(PreferenceManager.getDefaultSharedPreferences(getContext()));
+        repository.setResources(getContext().getResources());
     }
 
     @Override

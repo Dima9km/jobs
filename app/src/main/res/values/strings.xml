@@ -6,7 +6,7 @@
         <item>Female</item>
     </string-array>
 
-    <string-array name="location">
+    <string-array name="location_names">
         <item>Berlin</item>
         <item>New York</item>
         <item>Madrid</item>

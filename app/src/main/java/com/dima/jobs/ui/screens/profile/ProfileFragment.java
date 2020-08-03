@@ -35,12 +35,12 @@ public class ProfileFragment extends Fragment {
     private Button datePicker;
     private Button btnSave;
 
-    private String FIRSTNAME = "first name";
-    private String PATRONYMIC = "patronymic";
-    private String LASTNAME = "last name";
-    private String SEX = "sex";
-    private String USERLOCATION = "user location";
-    private String BIRTHDAY = "birthday";
+    private final String FIRST_NAME = "first_name";
+    private final String PATRONYMIC = "patronymic";
+    private final String LAST_NAME = "last_name";
+    private final String SEX = "sex";
+    private final String USER_LOCATION = "user_location";
+    private final String BIRTHDAY = "birthday";
 
     private final Calendar pickedDate = Calendar.getInstance();
     private DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -102,22 +102,22 @@ public class ProfileFragment extends Fragment {
 
     private void readData() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        firstName.setText(prefs.getString(FIRSTNAME, ""));
+        firstName.setText(prefs.getString(FIRST_NAME, ""));
         patronymic.setText(prefs.getString(PATRONYMIC, ""));
-        lastName.setText(prefs.getString(LASTNAME, ""));
+        lastName.setText(prefs.getString(LAST_NAME, ""));
         sex.setSelection(prefs.getInt(SEX, 0));
-        userLocation.setSelection(prefs.getInt(USERLOCATION, 1));
+        userLocation.setSelection(prefs.getInt(USER_LOCATION, 1));
         birthday.setText(prefs.getString(BIRTHDAY, ""));
     }
 
     private void saveData() {
         PreferenceManager.getDefaultSharedPreferences(getContext())
                 .edit()
-                .putString(FIRSTNAME, firstName.getText().toString())
+                .putString(FIRST_NAME, firstName.getText().toString())
                 .putString(PATRONYMIC, patronymic.getText().toString())
-                .putString(LASTNAME, lastName.getText().toString())
+                .putString(LAST_NAME, lastName.getText().toString())
                 .putInt(SEX, sex.getSelectedItemPosition())
-                .putInt(USERLOCATION, userLocation.getSelectedItemPosition())
+                .putInt(USER_LOCATION, userLocation.getSelectedItemPosition())
                 .putString(BIRTHDAY, birthday.getText().toString())
                 .apply();
     }

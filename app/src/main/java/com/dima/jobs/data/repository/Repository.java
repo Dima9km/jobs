@@ -18,15 +18,25 @@ import java.util.List;
 public class Repository {
 
     private RepositoryListener repositoryListener;
-    private String location;
     private JobsDatabase db = App.getInstance().getDatabase();
     private JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
+
+    private SharedPreferences preferences;
+    private Resources resources;
+
+    public Repository() {
+    }
 
     public Repository(RepositoryListener repositoryListener) {
         this.repositoryListener = repositoryListener;
     }
 
-    public Repository() {
+    public void setPreferences(SharedPreferences preferences) {
+        this.preferences = preferences;
+    }
+
+    public void setResources(Resources resources) {
+        this.resources = resources;
     }
 
     public void getFavoriteJobs() {
@@ -55,7 +65,7 @@ public class Repository {
     }
 
     public void getJobs() {
-        new JobsRemoteDownloader().getRemoteJobs(new RemoteListener() {
+        new JobsRemoteDownloader().getRemoteJobs(getLocationFromProfile(), new RemoteListener() {
 
             @Override
             public void onStartDownload() {
@@ -77,7 +87,7 @@ public class Repository {
             public void onEndDownload() {
                 repositoryListener.onEndDownload();
             }
-        }, location);
+        });
     }
 
     public void addFavorite(Job job) {
@@ -88,7 +98,7 @@ public class Repository {
         jobFavoritesDao.deleteFavorite(job);
     }
 
-    public void formatJobs(List<Job> jobs) {
+    private void formatJobs(List<Job> jobs) {
         for (Job jobDb : jobFavoritesDao.getAll()) {
             for (Job jobServer : jobs) {
                 if (jobDb.getId().equals(jobServer.getId())) {
@@ -99,7 +109,8 @@ public class Repository {
         }
     }
 
-    public void setLocation(SharedPreferences preferences, Resources resources) {
-        this.location = resources.getStringArray(R.array.location)[preferences.getInt("user location", 1)];
+    private String getLocationFromProfile() {
+        String[] locationNames = resources.getStringArray(R.array.location_names);
+        return locationNames[preferences.getInt("user_location", 1)];
     }
 }
