@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.dima.jobs.R;
 import com.dima.jobs.data.model.Job;
@@ -19,6 +20,8 @@ import com.dima.jobs.data.repository.RepositoryListener;
 import java.util.List;
 
 public class JobsFragment extends Fragment {
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private Repository repository = new Repository(new RepositoryListener() {
         @Override
@@ -63,5 +66,13 @@ public class JobsFragment extends Fragment {
     private void showJobsList(List<Job> jobsServer) {
         RecyclerView recyclerJobs = getView().findViewById(R.id.rvJobs);
         recyclerJobs.setAdapter(new JobsAdapter(jobsServer, repository));
+        SwipeRefreshLayout swipeRefreshLayout = getView().findViewById(R.id.srlRefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                repository.getJobs();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 }
