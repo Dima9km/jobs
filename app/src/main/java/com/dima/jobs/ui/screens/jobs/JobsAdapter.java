@@ -39,10 +39,6 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
         fragmentRefresher = refresher;
     }
 
-    public JobsAdapter(List<Job> jobs) {
-        this.jobs = jobs;
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_job, parent, false));

@@ -20,12 +20,12 @@ public class JobsRemoteDownloader {
         jobsCall.enqueue(new Callback<List<Job>>() {
             @Override
             public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
-                remoteListener.onEndDownload();
                 if (response.isSuccessful()) {
                     remoteListener.onGetData(response.body());
                 } else {
                     remoteListener.onError("HTTP Error " + response.code());
                 }
+                remoteListener.onEndDownload();
             }
 
             @Override
