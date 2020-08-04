@@ -10,6 +10,8 @@ import com.dima.jobs.data.database.JobFavoritesDao;
 import com.dima.jobs.data.database.JobsDatabase;
 import com.dima.jobs.data.database.JobsDatabaseDownloader;
 import com.dima.jobs.data.model.Job;
+import com.dima.jobs.data.model.UserProfile;
+import com.dima.jobs.data.preferences.SharedPreferencesManager;
 import com.dima.jobs.data.remote.JobsRemoteDownloader;
 import com.dima.jobs.data.remote.RemoteListener;
 
@@ -21,8 +23,8 @@ public class Repository {
     private JobsDatabase db = App.getInstance().getDatabase();
     private JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
 
-    private SharedPreferences preferences;
     private Resources resources;
+    private SharedPreferencesManager sharedPreferencesManager;
 
     public Repository() {
     }
@@ -32,7 +34,7 @@ public class Repository {
     }
 
     public void setPreferences(SharedPreferences preferences) {
-        this.preferences = preferences;
+        sharedPreferencesManager = new SharedPreferencesManager(preferences);
     }
 
     public void setResources(Resources resources) {
@@ -111,6 +113,14 @@ public class Repository {
 
     private String getLocationFromProfile() {
         String[] locationNames = resources.getStringArray(R.array.location_names);
-        return locationNames[preferences.getInt("user_location", 1)];
+        return locationNames[sharedPreferencesManager.getProfile().getUserLocation()];
+    }
+
+    public UserProfile getProfile() {
+        return sharedPreferencesManager.getProfile();
+    }
+
+    public void updateProfile(UserProfile userProfile) {
+        sharedPreferencesManager.updateProfile(userProfile);
     }
 }

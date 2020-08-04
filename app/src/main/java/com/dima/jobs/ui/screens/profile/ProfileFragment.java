@@ -1,7 +1,6 @@
 package com.dima.jobs.ui.screens.profile;
 
 import android.app.DatePickerDialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -19,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.dima.jobs.R;
+import com.dima.jobs.data.model.UserProfile;
+import com.dima.jobs.data.repository.Repository;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,12 +36,8 @@ public class ProfileFragment extends Fragment {
     private Button datePicker;
     private Button btnSave;
 
-    private final String FIRST_NAME = "first_name";
-    private final String PATRONYMIC = "patronymic";
-    private final String LAST_NAME = "last_name";
-    private final String SEX = "sex";
-    private final String USER_LOCATION = "user_location";
-    private final String BIRTHDAY = "birthday";
+    private UserProfile userProfile;
+    private Repository repository;
 
     private final Calendar pickedDate = Calendar.getInstance();
     private DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -53,6 +50,14 @@ public class ProfileFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        repository = new Repository();
+        repository.setPreferences(PreferenceManager.getDefaultSharedPreferences(getContext()));
+        userProfile = repository.getProfile();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,7 +68,8 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI();
-        readData();
+        userProfile = repository.getProfile();
+        fillUpUI();
     }
 
     private void initUI() {
@@ -75,20 +81,13 @@ public class ProfileFragment extends Fragment {
         birthday = getView().findViewById(R.id.tvBirthdayText);
 
         datePicker = getView().findViewById(R.id.btnDatePicker);
-        datePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePicker();
-            }
-        });
+        datePicker.setOnClickListener(v -> showDatePicker());
 
         btnSave = getView().findViewById(R.id.btnSaveData);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveData();
-                Toast.makeText(getContext(), "All data changed", Toast.LENGTH_LONG).show();
-            }
+        btnSave.setOnClickListener(v -> {
+            updateProfile();
+            repository.updateProfile(userProfile);
+            Toast.makeText(getContext(), "All data changed", Toast.LENGTH_LONG).show();
         });
     }
 
@@ -100,25 +99,21 @@ public class ProfileFragment extends Fragment {
                 .show();
     }
 
-    private void readData() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        firstName.setText(prefs.getString(FIRST_NAME, ""));
-        patronymic.setText(prefs.getString(PATRONYMIC, ""));
-        lastName.setText(prefs.getString(LAST_NAME, ""));
-        sex.setSelection(prefs.getInt(SEX, 0));
-        userLocation.setSelection(prefs.getInt(USER_LOCATION, 1));
-        birthday.setText(prefs.getString(BIRTHDAY, ""));
+    private void fillUpUI() {
+        firstName.setText(userProfile.getFirstName());
+        patronymic.setText(userProfile.getPatronymic());
+        lastName.setText(userProfile.getLastName());
+        sex.setSelection(userProfile.getSex());
+        userLocation.setSelection(userProfile.getUserLocation());
+        birthday.setText(userProfile.getBirthday());
     }
 
-    private void saveData() {
-        PreferenceManager.getDefaultSharedPreferences(getContext())
-                .edit()
-                .putString(FIRST_NAME, firstName.getText().toString())
-                .putString(PATRONYMIC, patronymic.getText().toString())
-                .putString(LAST_NAME, lastName.getText().toString())
-                .putInt(SEX, sex.getSelectedItemPosition())
-                .putInt(USER_LOCATION, userLocation.getSelectedItemPosition())
-                .putString(BIRTHDAY, birthday.getText().toString())
-                .apply();
+    private void updateProfile() {
+        userProfile.setFirstName(firstName.getText().toString());
+        userProfile.setPatronymic(patronymic.getText().toString());
+        userProfile.setLastName(lastName.getText().toString());
+        userProfile.setSex(sex.getSelectedItemPosition());
+        userProfile.setUserLocation(userLocation.getSelectedItemPosition());
+        userProfile.setBirthday(birthday.getText().toString());
     }
 }

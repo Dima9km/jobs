@@ -83,12 +83,7 @@ public class JobsFragment extends Fragment {
         circleProgress = getView().findViewById(R.id.pbJobs);
         swipeRefreshLayout = getView().findViewById(R.id.srlRefresh);
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                repository.getJobs();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(() -> repository.getJobs());
     }
 
     private void showJobsList(List<Job> jobsServer) {

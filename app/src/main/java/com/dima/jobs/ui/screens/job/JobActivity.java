@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,29 +52,21 @@ public class JobActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.tbJob);
         toolbar.setSubtitle(job.getTitle());
         toolbar.setTitle(job.getCompany());
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
         toolbar.inflateMenu(R.menu.detail_toolbar_menu);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (!job.isFavorite()) {
-                    job.setFavorite(true);
-                    repository.addFavorite(job);
-                    setToolbarIcon(R.drawable.ic_baseline_star_24);
-                    showToast("Added to favorites");
-                } else {
-                    job.setFavorite(false);
-                    repository.deleteFavorite(job);
-                    setToolbarIcon(R.drawable.ic_baseline_star_border_24);
-                    showToast("Removed from favorites");
-                }
-                return true;
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (!job.isFavorite()) {
+                job.setFavorite(true);
+                repository.addFavorite(job);
+                setToolbarIcon(R.drawable.ic_baseline_star_24);
+                showToast("Added to favorites");
+            } else {
+                job.setFavorite(false);
+                repository.deleteFavorite(job);
+                setToolbarIcon(R.drawable.ic_baseline_star_border_24);
+                showToast("Removed from favorites");
             }
+            return true;
         });
         setToolbarIcon(job.isFavorite() ? R.drawable.ic_baseline_star_24 : R.drawable.ic_baseline_star_border_24);
     }
@@ -116,12 +107,7 @@ public class JobActivity extends AppCompatActivity {
 
         TextView howToApply = findViewById(R.id.tvHowToApply);
         howToApply.setText(Html.fromHtml(job.getHowToApply()));
-        howToApply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickHelper();
-            }
-        });
+        howToApply.setOnClickListener(v -> onClickHelper());
 
         TextView url = findViewById(R.id.tvUrl);
         url.setText("See more: " + Html.fromHtml(job.getUrl()));
@@ -134,12 +120,7 @@ public class JobActivity extends AppCompatActivity {
 
         TextView companyUrl = findViewById(R.id.tvCompanyUrl);
         companyUrl.setText("Website: " + job.getCompanyUrl());
-        companyUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickHelper();
-            }
-        });
+        companyUrl.setOnClickListener(v -> onClickHelper());
     }
 
     private void onClickHelper() {

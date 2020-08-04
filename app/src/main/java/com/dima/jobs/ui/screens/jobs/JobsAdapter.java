@@ -90,32 +90,24 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
             location.setText(job.getLocation());
             type.setText(job.getType());
 
-            favoriteStar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!job.isFavorite()) {
-                        job.setFavorite(true);
-                        repository.addFavorite(job);
-                        favoriteStar.setImageResource(R.drawable.ic_baseline_star_24);
-                        showToast("Added to favorites");
-                    } else {
-                        job.setFavorite(false);
-                        repository.deleteFavorite(job);
-                        favoriteStar.setImageResource(R.drawable.ic_baseline_star_border_24);
-                        showToast("Removed from favorites");
-                    }
-
-                    if (fragmentRefresher != null) fragmentRefresher.onDataChanged();
-
+            favoriteStar.setOnClickListener(v -> {
+                if (!job.isFavorite()) {
+                    job.setFavorite(true);
+                    repository.addFavorite(job);
+                    favoriteStar.setImageResource(R.drawable.ic_baseline_star_24);
+                    showToast("Added to favorites");
+                } else {
+                    job.setFavorite(false);
+                    repository.deleteFavorite(job);
+                    favoriteStar.setImageResource(R.drawable.ic_baseline_star_border_24);
+                    showToast("Removed from favorites");
                 }
+
+                if (fragmentRefresher != null) fragmentRefresher.onDataChanged();
+
             });
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    v.getContext().startActivity(new Intent(v.getContext(), JobActivity.class).putExtra("job", job));
-                }
-            });
+            itemView.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), JobActivity.class).putExtra("job", job)));
         }
 
         private void showToast(String text) {
