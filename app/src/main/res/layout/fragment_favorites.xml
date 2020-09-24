@@ -5,8 +5,7 @@
     android:id="@+id/fragmentFavorites"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.screens.favorites.FavoritesFragment">
+    android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvJobs"
