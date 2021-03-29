@@ -13,7 +13,7 @@ public class SharedPreferencesManager {
     private final String USER_LOCATION = "user_location";
     private final String BIRTHDAY = "birthday";
 
-    private SharedPreferences preferences;
+    private final SharedPreferences preferences;
 
     public SharedPreferencesManager(SharedPreferences preferences) {
         this.preferences = preferences;

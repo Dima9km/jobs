@@ -23,10 +23,10 @@ import java.util.List;
 
 public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
 
-    private List<Job> jobs;
+    private final List<Job> jobs;
 
     private FragmentRefresher fragmentRefresher;
-    private Repository repository;
+    private final Repository repository;
 
     public JobsAdapter(List<Job> jobs, Repository repository) {
         this.jobs = jobs;
@@ -55,12 +55,12 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView companyLogo;
-        private TextView company;
-        private TextView title;
-        private TextView location;
-        private TextView type;
-        private ImageView favoriteStar;
+        private final ImageView companyLogo;
+        private final TextView company;
+        private final TextView title;
+        private final TextView location;
+        private final TextView type;
+        private final ImageView favoriteStar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

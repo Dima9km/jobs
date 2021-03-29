@@ -21,10 +21,9 @@ import java.util.List;
 
 public class FavoritesFragment extends Fragment implements FragmentRefresher {
 
-    private Repository repository = new Repository(new RepositoryListener() {
+    private final Repository repository = new Repository(new RepositoryListener() {
         @Override
         public void onStartDownload() {
-            //todo progressbar
         }
 
         @Override
@@ -39,7 +38,6 @@ public class FavoritesFragment extends Fragment implements FragmentRefresher {
 
         @Override
         public void onEndDownload() {
-            //todo progressbar
         }
     });
 

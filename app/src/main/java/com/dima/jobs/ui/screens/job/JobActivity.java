@@ -34,7 +34,7 @@ public class JobActivity extends AppCompatActivity {
     private TextView createdAt;
     private Toolbar toolbar;
 
-    private Repository repository = new Repository();
+    private final Repository repository = new Repository();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

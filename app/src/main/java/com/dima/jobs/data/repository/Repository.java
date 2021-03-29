@@ -20,8 +20,8 @@ import java.util.List;
 public class Repository {
 
     private RepositoryListener repositoryListener;
-    private JobsDatabase db = App.getInstance().getDatabase();
-    private JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
+    private final JobsDatabase db = App.getInstance().getDatabase();
+    private final JobFavoritesDao jobFavoritesDao = db.jobFavoritesDao();
 
     private Resources resources;
     private SharedPreferencesManager sharedPreferencesManager;
@@ -123,4 +123,5 @@ public class Repository {
     public void updateProfile(UserProfile userProfile) {
         sharedPreferencesManager.updateProfile(userProfile);
     }
+    
 }

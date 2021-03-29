@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void changeFragment(Fragment toChange) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, toChange).commit();
+                .replace(R.id.flFragmentContainer, toChange).commit();
     }
 
 

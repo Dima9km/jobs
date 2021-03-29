@@ -33,14 +33,12 @@ public class ProfileFragment extends Fragment {
     private EditText lastName;
     private Spinner sex;
     private Spinner userLocation;
-    private Button datePicker;
-    private Button btnSave;
 
     private UserProfile userProfile;
     private Repository repository;
 
     private final Calendar pickedDate = Calendar.getInstance();
-    private DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+    private final DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             pickedDate.set(Calendar.YEAR, year);
@@ -80,10 +78,10 @@ public class ProfileFragment extends Fragment {
         userLocation = getView().findViewById(R.id.spLocation);
         birthday = getView().findViewById(R.id.tvBirthdayText);
 
-        datePicker = getView().findViewById(R.id.btnDatePicker);
+        Button datePicker = getView().findViewById(R.id.btnDatePicker);
         datePicker.setOnClickListener(v -> showDatePicker());
 
-        btnSave = getView().findViewById(R.id.btnSaveData);
+        Button btnSave = getView().findViewById(R.id.btnSaveData);
         btnSave.setOnClickListener(v -> {
             updateProfile();
             repository.updateProfile(userProfile);

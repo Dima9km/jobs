@@ -27,7 +27,7 @@ public class JobsFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProgressBar circleProgress;
 
-    private Repository repository = new Repository(new RepositoryListener() {
+    private final Repository repository = new Repository(new RepositoryListener() {
         @Override
         public void onStartDownload() {
             if (recyclerJobs.getAdapter() != null && recyclerJobs.getAdapter().getItemCount() > 0) {
